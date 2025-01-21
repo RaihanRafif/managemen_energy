@@ -12,6 +12,8 @@ body {
     background-color: #f4f4f4;
     color: #333;
     margin: 0;
+    display: flex;
+    flex-direction: column;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -36,7 +38,7 @@ header .icon-right img {
     width: auto;
 }
 
-header nav{
+header nav {
     width: 50%;
     height: 80px;
     background-color: #ECEFF1;
@@ -71,16 +73,72 @@ header nav ul li a:hover {
 footer {
     display: flex;
     justify-content: space-between;
-    background: #333;
-    color: #fff;
+    align-items: center;
+    color: #000000;
     padding: 10px 20px;
     position: fixed;
     bottom: 0;
-    width: 100%;
+    left: 15px;
+    /* Margin from the left */
+    right: 15px;
+    /* Margin from the right */
+
+    border: 2px solid #ECEFF1;
+    border-radius: 4px;
+
+    font-size: 14px;
+    font-weight: medium;
 }
+
 
 /* Main Content */
 main {
     padding: 20px;
     text-align: center;
+}
+
+/* ----------------------HOME PAGE-------------------------- */
+.container {
+    display: flex;
+}
+
+.left {
+    display: flex;
+    width: 80%;
+    height: 100%;
+}
+
+.right {
+    width: 20%;
+    height: 100%;
+}
+
+.left .top,
+.left .bottom,
+.right {
+    border: 2px solid #ECEFF1;
+    border-radius: 4px;
+}
+
+.left .top {}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.input {
+    height: 56px;
+    width: 70%;
+    border: 1px solid #424242;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.h3{
+    margin-right: auto;
 }
