@@ -155,19 +155,59 @@
             </div>
         </div>
     </div>
-    <script>
 
-        TESTER = document.getElementById('tester');
-        
-        Plotly.newPlot(TESTER, [{
-            x: [1, 2, 3, 4, 5],
-            y: [1, 2, 4, 8, 16]
-        }], {
-            margin: {
-                t: 0
+    <script>
+        const TESTER = document.getElementById('tester');
+
+        // Dummy data with multiple traces
+        const data = [{
+                x: [1, 2, 3, 4, 5],
+                y: [1, 2, 4, 8, 16],
+                mode: 'lines+markers',
+                name: 'Dataset A', // Name appears in the legend
+                line: {
+                    color: 'blue'
+                }
+            },
+            {
+                x: [1, 2, 3, 4, 5],
+                y: [16, 8, 4, 2, 1],
+                mode: 'lines+markers',
+                name: 'Dataset B', // Name appears in the legend
+                line: {
+                    color: 'red'
+                }
             }
-        });
+        ];
+
+        // Layout configuration
+        const layout = {
+            title: 'Dummy Data Chart',
+            xaxis: {
+                title: 'X Axis Label'
+            },
+            yaxis: {
+                title: {
+                    text: 'Y Axis Label',
+                    standoff: 20, // Space between the label and the axis
+                    font: {
+                        size: 14, // Adjust font size
+                        color: 'black' // Adjust font color
+                    }
+                },
+                titlefont: {
+                    size: 16
+                },
+                titleangle: 0 // Make the label horizontal
+            },
+        };
+
+
+        // Create the plot
+        Plotly.newPlot(TESTER, data, layout);
     </script>
+
+
 </body>
 
 
