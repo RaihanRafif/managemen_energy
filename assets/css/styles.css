@@ -9,7 +9,7 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4;
+    background-color: #ffff;
     color: #333;
     margin: 0;
     display: flex;
@@ -93,52 +93,6 @@ footer {
 
 /* Main Content */
 main {
-    padding: 20px;
     text-align: center;
 }
 
-/* ----------------------HOME PAGE-------------------------- */
-.container {
-    display: flex;
-}
-
-.left {
-    display: flex;
-    width: 80%;
-    height: 100%;
-}
-
-.right {
-    width: 20%;
-    height: 100%;
-}
-
-.left .top,
-.left .bottom,
-.right {
-    border: 2px solid #ECEFF1;
-    border-radius: 4px;
-}
-
-.left .top {}
-
-.right {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 16px;
-}
-
-.input {
-    height: 56px;
-    width: 70%;
-    border: 1px solid #424242;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-}
-
-.h3{
-    margin-right: auto;
-}
