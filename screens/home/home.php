@@ -28,7 +28,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="section-container" style="margin-left: auto;">
+                    <div class="powerline-1-2"></div>
+                    <div class="section-container" style="margin-left: auto;margin-right: 10%;">
                         <div class="img-cont">
                             <img src="./assets/car battery.png" alt="Solar Panels">
                         </div>
@@ -44,6 +45,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="section-container">
                         <div class="img-cont">
                             <img src="./assets/transmission tower.png" alt="Solar Panels">
@@ -86,7 +88,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="section-container" style="margin-left: auto;">
+                    <div class="section-container" style="margin-left: auto;margin-right: 10%;">
                         <div class="img-cont">
                             <img src="./assets/solar panels.png" alt="Solar Panels">
                         </div>
