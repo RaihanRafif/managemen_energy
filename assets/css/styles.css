@@ -122,6 +122,8 @@ main {
 
 .left .top {}
 
+.left .bottom{}
+
 .right {
     display: flex;
     flex-direction: column;
