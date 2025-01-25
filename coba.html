@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Power Line</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 100px; /* Jarak antara div atas dan div bawah */
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 50px; /* Jarak antar div dalam satu baris */
+    }
+
+    .box {
+      width: 50px;
+      height: 50px;
+      background-color: #c70025;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    /* Styling untuk SVG agar berada di belakang elemen */
+    .lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* Agar SVG tidak mengganggu klik elemen lain */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Baris atas -->
+    <div class="row row-top">
+      <div class="box" id="top1">1</div>
+      <div class="box" id="top2">2</div>
+      <div class="box" id="top3">3</div>
+    </div>
+
+    <!-- Baris bawah -->
+    <div class="row row-bottom">
+      <div class="box" id="bottom1">1</div>
+      <div class="box" id="bottom2">2</div>
+      <div class="box" id="bottom3">3</div>
+    </div>
+
+    <!-- SVG untuk garis -->
+    <svg class="lines">
+      <line id="line1-2" stroke="black" stroke-width="2" />
+      <line id="line2-3" stroke="black" stroke-width="2" />
+      <line id="line1-bottom2" stroke="black" stroke-width="2" />
+    </svg>
+  </div>
+
+  <script>
+    // Fungsi untuk menghitung posisi garis
+    function updateLines() {
+      const line1to2 = document.getElementById('line1-2');
+      const line2to3 = document.getElementById('line2-3');
+      const line1toBottom2 = document.getElementById('line1-bottom2');
+
+      const top1 = document.getElementById('top1').getBoundingClientRect();
+      const top2 = document.getElementById('top2').getBoundingClientRect();
+      const top3 = document.getElementById('top3').getBoundingClientRect();
+      const bottom2 = document.getElementById('bottom2').getBoundingClientRect();
+
+      // Menghubungkan div atas 1 ke div atas 2
+      line1to2.setAttribute('x1', top1.x + top1.width / 2);
+      line1to2.setAttribute('y1', top1.y + top1.height / 2 + window.scrollY);
+      line1to2.setAttribute('x2', top2.x + top2.width / 2);
+      line1to2.setAttribute('y2', top2.y + top2.height / 2 + window.scrollY);
+
+      // Menghubungkan div atas 2 ke div atas 3
+      line2to3.setAttribute('x1', top2.x + top2.width / 2);
+      line2to3.setAttribute('y1', top2.y + top2.height / 2 + window.scrollY);
+      line2to3.setAttribute('x2', top3.x + top3.width / 2);
+      line2to3.setAttribute('y2', top3.y + top3.height / 2 + window.scrollY);
+
+      // Menghubungkan garis antara div atas 1 ke div bawah 2
+      line1toBottom2.setAttribute('x1', top1.x + top1.width / 2);
+      line1toBottom2.setAttribute('y1', top1.y + top1.height / 2 + window.scrollY);
+      line1toBottom2.setAttribute('x2', bottom2.x + bottom2.width / 2);
+      line1toBottom2.setAttribute('y2', bottom2.y + bottom2.height / 2 + window.scrollY);
+    }
+
+    // Update posisi garis saat halaman dimuat atau diubah ukurannya
+    window.addEventListener('load', updateLines);
+    window.addEventListener('resize', updateLines);
+  </script>
+</body>
+</html>

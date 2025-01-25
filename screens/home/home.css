@@ -1,0 +1,235 @@
+/* ----------------------HOME PAGE-------------------------- */
+
+
+.container {
+    display: flex;
+    gap: 8px;
+    height: 83vh;
+    margin-top: 20px;
+}
+
+.left {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+}
+
+.right {
+    width: 20%;
+    height: 100%;
+}
+
+.left .top,
+.left .bottom,
+.right {
+    border: 2px solid #ECEFF1;
+    border-radius: 4px;
+}
+
+.left .top {
+    padding: 8px;
+}
+
+.left .top-top {
+    display: flex;
+    position: relative;
+}
+
+.left .section-container {
+    height: fit-content;
+    min-width: 287px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #29B6F6;
+    border-radius: 4px;
+    padding: 2px 8px;
+}
+
+.section-container .data-container {
+    text-align: left;
+    height: auto;
+    width: 100%;
+}
+
+
+
+
+.left .top-bottom {
+    margin-top: 20px;
+    display: flex;
+}
+
+.left .bottom {
+    width: 100px;
+    height: 100px;
+    background-color: #f4f4f4;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: start;
+    padding-bottom: 20px;
+}
+
+.right .title {
+    align-items: center;
+    width: 100%;
+}
+
+.right h3 {
+    margin-left: 20px;
+}
+
+.right .input {
+    height: 56px;
+    width: 70%;
+    border: 1px solid #424242;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    margin-left: 20%;
+}
+
+
+.h3 {
+    margin-right: auto;
+}
+
+.left .bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ECEFF1;
+    width: 100%;
+    height: 100%;
+}
+
+/* LINE SECTION */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* Membuat 6 kolom */
+    grid-template-rows: repeat(6, 1fr);
+    /* Membuat 6 baris */
+    gap: 0;
+    /* Tidak ada jarak antar sel */
+}
+
+.cell {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell-data{}
+
+.cell-data .data-value {
+    width: 100%;
+    border: 1px solid #424242;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.cell-data .data-title {
+    font-size: 14px;
+}
+
+.cell-data .data-container{
+    text-align: left;
+}
+
+
+
+/* Aturan posisi setiap elemen */
+/* 1x1 dan 2x1 */
+.cell-1-1-2-1 {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    border: 1px solid #29B6f6;
+    border-radius:4px;
+    padding:2px 8px 2px 8px;
+}
+
+/* 1x2 dan 1x3 */
+.cell-1-2-1-3 {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    border-bottom: 1px solid black;
+}
+
+/* 1x5 */
+.cell-1-5 {
+    grid-column: 5;
+    grid-row: 1;
+    border-bottom: 1px solid black;
+}
+
+/* 4x3 */
+.cell-4-3 {
+    grid-column: 3;
+    grid-row: 4;
+    border-bottom: 1px solid black;
+}
+
+/* 2x2, 3x2, dan 4x2 */
+.cell-2-2-3-2-4-2 {
+    grid-column: 2;
+    grid-row: 2 / 5;
+    border-right: 1px solid black;
+}
+
+/* 1x4 dan 2x4 */
+.cell-1-4-2-4 {
+    grid-column: 4;
+    grid-row: 1 / 3;
+    border: 1px solid #29B6f6;
+    border-radius:4px;
+    padding:2px 8px 2px 8px;
+}
+
+/* 1x6 dan 2x6 */
+.cell-1-6-2-6 {
+    grid-column: 6;
+    grid-row: 1 / 3;
+    border: 1px solid #29B6f6;
+    border-radius:4px;
+    padding:2px 8px 2px 8px;
+}
+
+/* 4x1, 5x1, dan 6x1 */
+.cell-4-1-5-1-6-1 {
+    grid-column: 1 / 2;
+    /* Dari kolom 1 ke kolom 2 */
+    grid-row: 4 / 7;
+    /* Dari baris 4 ke baris 7 */
+    border: 1px solid #29B6f6;
+    border-radius:4px;
+    padding:2px 8px 2px 8px;
+}
+
+/* 4x4 dan 5x4 */
+.cell-4-4-5-4 {
+    grid-column: 4;
+    grid-row: 4 / 6;
+    border: 1px solid #29B6f6;
+    border-radius:4px;
+    padding:2px 8px 2px 8px;
+}
+
+/* 4x4 dan 5x4 */
+.cell-4-6-5-6 {
+    grid-column: 6;
+    grid-row: 4 / 6;
+    border: 1px solid #29B6f6;
+    border-radius:4px;
+    padding:2px 8px 2px 8px;
+}

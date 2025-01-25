@@ -9,7 +9,7 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4;
+    background-color: #ffff;
     color: #333;
     margin: 0;
     display: flex;
@@ -93,7 +93,6 @@ footer {
 
 /* Main Content */
 main {
-    padding: 20px;
     text-align: center;
 }
 
