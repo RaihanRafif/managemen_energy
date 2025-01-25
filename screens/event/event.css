@@ -1,0 +1,103 @@
+.container-menu {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    height: 100vh;
+}
+
+.table-container {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+
+.table-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    /* Memastikan hanya elemen ini yang memiliki scroll */
+    max-height: 80%;
+    /* Tentukan tinggi maksimal */
+    margin-top: 0.5rem;
+    position: relative;
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 1rem;
+    text-align: left;
+}
+
+th {
+    background-color: #0093DD;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+}
+
+td {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+table {
+    border: none;
+}
+
+th,
+td {
+    border-bottom: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+
+    th,
+    td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}

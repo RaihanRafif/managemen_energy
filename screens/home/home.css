@@ -1,24 +1,23 @@
 /* ----------------------HOME PAGE-------------------------- */
 
+.mt-5 {
+    margin-top: 5px;
+}
 
-.container {
+.container-menu {
+    flex: 1;
     display: flex;
-    gap: 8px;
-    height: 83vh;
-    margin-top: 20px;
+    overflow-y: auto;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
 }
 
 .left {
+    flex: 1;
     display: flex;
-    gap: 16px;
     flex-direction: column;
-    width: 80%;
-    height: 100%;
-}
-
-.right {
-    width: 20%;
-    height: 100%;
+    /* gap: 8px; */
+    margin-right: 0.5rem;
 }
 
 .left .top,
@@ -29,22 +28,15 @@
 }
 
 .left .top {
-    padding: 8px;
+    flex: 1;
+    margin-bottom: 0.5rem;
+    padding: 1rem;
 }
 
-.left .top-top {
-    display: flex;
-    position: relative;
-}
 
-.left .section-container {
-    height: fit-content;
-    min-width: 287px;
-    display: flex;
-    align-items: center;
-    border: 1px solid #29B6F6;
-    border-radius: 4px;
-    padding: 2px 8px;
+.left .bottom {
+    height: 40%;
+    overflow: hidden;
 }
 
 .section-container .data-container {
@@ -54,30 +46,17 @@
 }
 
 
-
-
-.left .top-bottom {
-    margin-top: 20px;
-    display: flex;
-}
-
-.left .bottom {
-    width: 100px;
-    height: 100px;
-    background-color: #f4f4f4;
-}
-
 .right {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 16px;
+    gap: 15px;
     align-items: start;
-    padding-bottom: 20px;
+    width: 20%;
 }
 
 .right .title {
-    align-items: center;
+    text-align: center;
     width: 100%;
 }
 
@@ -101,21 +80,14 @@
     margin-right: auto;
 }
 
-.left .bottom {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #ECEFF1;
-    width: 100%;
-    height: 100%;
-}
+
 
 /* LINE SECTION */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     /* Membuat 6 kolom */
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: 0.25fr 0.25fr 0.05fr 0.30fr 0.30fr 0.30fr;
     /* Membuat 6 baris */
     gap: 0;
     /* Tidak ada jarak antar sel */
@@ -128,10 +100,28 @@
     align-items: center;
 }
 
-.cell-data{}
+.cell-data {
+    /* height: fit-content; */
+    min-width: 287px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #29B6F6;
+    border-radius: 4px;
+    padding: 2px 8px;
+}
+
+.cell-data .img-container {
+    height: fit-content;
+    width: 150px;
+}
+
+.cell-data .img-container img {
+    object-fit: cover;
+}
+
 
 .cell-data .data-value {
-    width: 100%;
+    width: 120px;
     border: 1px solid #424242;
     display: flex;
     align-items: center;
@@ -143,7 +133,7 @@
     font-size: 14px;
 }
 
-.cell-data .data-container{
+.cell-data .data-container {
     text-align: left;
 }
 
@@ -155,36 +145,35 @@
     grid-column: 1;
     grid-row: 1 / 3;
     border: 1px solid #29B6f6;
-    border-radius:4px;
-    padding:2px 8px 2px 8px;
+    border-radius: 4px;
 }
 
 /* 1x2 dan 1x3 */
 .cell-1-2-1-3 {
     grid-column: 2 / 4;
     grid-row: 1;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
 }
 
 /* 1x5 */
 .cell-1-5 {
     grid-column: 5;
     grid-row: 1;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
 }
 
 /* 4x3 */
 .cell-4-3 {
     grid-column: 3;
     grid-row: 4;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
 }
 
 /* 2x2, 3x2, dan 4x2 */
 .cell-2-2-3-2-4-2 {
     grid-column: 2;
     grid-row: 2 / 5;
-    border-right: 1px solid black;
+    border-right: 2px solid black;
 }
 
 /* 1x4 dan 2x4 */
@@ -192,8 +181,7 @@
     grid-column: 4;
     grid-row: 1 / 3;
     border: 1px solid #29B6f6;
-    border-radius:4px;
-    padding:2px 8px 2px 8px;
+    border-radius: 4px;
 }
 
 /* 1x6 dan 2x6 */
@@ -201,8 +189,7 @@
     grid-column: 6;
     grid-row: 1 / 3;
     border: 1px solid #29B6f6;
-    border-radius:4px;
-    padding:2px 8px 2px 8px;
+    border-radius: 4px;
 }
 
 /* 4x1, 5x1, dan 6x1 */
@@ -212,8 +199,7 @@
     grid-row: 4 / 7;
     /* Dari baris 4 ke baris 7 */
     border: 1px solid #29B6f6;
-    border-radius:4px;
-    padding:2px 8px 2px 8px;
+    border-radius: 4px;
 }
 
 /* 4x4 dan 5x4 */
@@ -221,8 +207,7 @@
     grid-column: 4;
     grid-row: 4 / 6;
     border: 1px solid #29B6f6;
-    border-radius:4px;
-    padding:2px 8px 2px 8px;
+    border-radius: 4px;
 }
 
 /* 4x4 dan 5x4 */
@@ -230,6 +215,5 @@
     grid-column: 6;
     grid-row: 4 / 6;
     border: 1px solid #29B6f6;
-    border-radius:4px;
-    padding:2px 8px 2px 8px;
+    border-radius: 4px;
 }

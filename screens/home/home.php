@@ -8,12 +8,12 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-menu">
         <div class="left">
             <div class="top">
                 <div class="grid-container">
                     <div class="cell cell-data cell-1-1-2-1">
-                        <div class="img-cont">
+                        <div class="img-container">
                             <img src="./assets/solar panels.png" alt="Solar Panels">
                         </div>
                         <div class="data-container">
@@ -22,7 +22,7 @@
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title">Frequency (Hz)</p>
+                            <p class="data-title mt-5">Frequency (Hz)</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
@@ -33,32 +33,32 @@
                     <div class="cell cell-4-3"></div>
                     <div class="cell cell-2-2-3-2-4-2"></div>
                     <div class="cell cell-data cell-1-4-2-4">
-                        <div class="img-cont">
-                            <img src="./assets/solar panels.png" alt="Solar Panels">
+                        <div class="img-container">
+                            <img src="./assets/car battery.png" alt="Solar Panels">
                         </div>
                         <div class="data-container">
                             <h3>BESS</h3>
-                            <p class="data-title">Power AC (W)</p>
+                            <p class="data-title">Power (W)</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title">Frequency (Hz)</p>
+                            <p class="data-title mt-5">SoC</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
                         </div>
                     </div>
                     <div class="cell cell-data cell-1-6-2-6">
-                        <div class="img-cont">
-                            <img src="./assets/solar panels.png" alt="Solar Panels">
+                        <div class="img-container">
+                            <img src="./assets/transmission tower.png" alt="Solar Panels">
                         </div>
                         <div class="data-container">
                             <h3>Grid</h3>
-                            <p class="data-title">Power AC (W)</p>
+                            <p class="data-title">P. Active</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title">Frequency (Hz)</p>
+                            <p class="data-title">P. Reactive</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
@@ -66,48 +66,56 @@
 
                     </div>
                     <div class="cell cell-data cell-4-1-5-1-6-1">
-                        <div class="img-cont">
-                            <img src="./assets/solar panels.png" alt="Solar Panels">
+                        <div class="img-container">
+                            <img src="./assets/windsock.png" alt="Solar Panels">
                         </div>
                         <div class="data-container">
-                            <h3>Load</h3>
-                            <p class="data-title">Power AC (W)</p>
+                            <h3>Weather Station</h3>
+                            <p class="data-title">Irradiance (W/m2)</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title">Frequency (Hz)</p>
+                            <p class="data-title mt-5">Temperature C</p>
+                            <div class="data-value">
+                                <p>10.0000</p>
+                            </div>
+                            <p class="data-title mt-5">Wind Speed (m/s)</p>
+                            <div class="data-value">
+                                <p>10.0000</p>
+                            </div>
+                            <p class="data-title mt-5">Humidity %</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
                         </div>
                     </div>
                     <div class="cell cell-data cell-4-4-5-4">
-                        <div class="img-cont">
-                            <img src="./assets/solar panels.png" alt="Solar Panels">
+                        <div class="img-container">
+                            <img src="./assets/home.png" alt="Solar Panels">
                         </div>
                         <div class="data-container">
                             <h3>Load</h3>
-                            <p class="data-title">Power AC (W)</p>
+                            <p class="data-title">Power (W)</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title">Frequency (Hz)</p>
+                            <p class="data-title mt-5">Frequency (Hz)</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
                         </div>
                     </div>
-                    <div class="cell cell-4-6-5-6">
-                        <div class="img-cont">
-                            <img src="./assets/solar panels.png" alt="Solar Panels">
+                    <div class="cell cell-data cell-4-6-5-6">
+                        <div class="img-container">
+                            <img src="./assets/motion sensor.png" alt="Solar Panels">
                         </div>
                         <div class="data-container">
                             <h3>Alarm</h3>
-                            <p class="data-title">Power AC (W)</p>
+                            <p class="data-title">Fault</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title">Frequency (Hz)</p>
+                            <p class="data-title mt-5">Fault type</p>
                             <div class="data-value">
                                 <p>10.0000</p>
                             </div>
@@ -116,7 +124,7 @@
                 </div>
             </div>
             <div class="bottom">
-                <div id="tester" style="width:75vw;height:90%"></div>
+                <div id="tester" style="width:75vw;height:90%;"></div>
             </div>
         </div>
 

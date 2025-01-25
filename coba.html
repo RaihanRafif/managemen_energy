@@ -1,116 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Power Line</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #f0f0f0;
-    }
+  <head>
+    <!-- <link rel="stylesheet" href="./screens/event/event.css" /> -->
+    <style>
+      .container-menu {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+        height: 100vh;
+      }
 
-    .container {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 100px; /* Jarak antara div atas dan div bawah */
-    }
+      .table-container {
+        width: 100%;
+        padding: 1rem;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
 
-    .row {
-      display: flex;
-      justify-content: center;
-      gap: 50px; /* Jarak antar div dalam satu baris */
-    }
+      h1 {
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
 
-    .box {
-      width: 50px;
-      height: 50px;
-      background-color: #c70025;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 14px;
-    }
+      .table-container {
+        width: 100%;
+        padding: 1rem;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+      }
 
-    /* Styling untuk SVG agar berada di belakang elemen */
-    .lines {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none; /* Agar SVG tidak mengganggu klik elemen lain */
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <!-- Baris atas -->
-    <div class="row row-top">
-      <div class="box" id="top1">1</div>
-      <div class="box" id="top2">2</div>
-      <div class="box" id="top3">3</div>
+      .table-wrapper {
+        flex: 1;
+        overflow-y: auto; /* Memastikan hanya elemen ini yang memiliki scroll */
+        max-height: 400px; /* Tentukan tinggi maksimal */
+        border-top: 2px solid #007bff;
+        margin-top: 0.5rem;
+        position: relative;
+      }
+
+
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+      }
+
+      th {
+        background-color: #007bff;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      thead {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+        transition: background-color 0.3s ease;
+      }
+
+      td {
+        color: #555;
+        font-size: 0.95rem;
+      }
+
+      table {
+        border: none;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid #ddd;
+      }
+
+      @media (max-width: 768px) {
+        th,
+        td {
+          padding: 0.5rem;
+          font-size: 0.85rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-menu">
+      <div class="table-container">
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Hours</th>
+                <th>Event</th>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Example Data -->
+              <tr>
+                <td>2025-01-25</td>
+                <td>10:00</td>
+                <td>Power Outage</td>
+                <td>Overload</td>
+                <td>Reduce Load</td>
+              </tr>
+              <tr>
+                <td>2025-01-24</td>
+                <td>14:30</td>
+                <td>Voltage Fluctuation</td>
+                <td>Equipment Fault</td>
+                <td>Replace Faulty Equipment</td>
+              </tr>
+              <tr>
+                <td>2025-01-25</td>
+                <td>10:00</td>
+                <td>Power Outage</td>
+                <td>Overload</td>
+                <td>Reduce Load</td>
+              </tr>
+              <tr>
+                <td>2025-01-24</td>
+                <td>14:30</td>
+                <td>Voltage Fluctuation</td>
+                <td>Equipment Fault</td>
+                <td>Replace Faulty Equipment</td>
+              </tr>
+              <tr>
+                <td>2025-01-25</td>
+                <td>10:00</td>
+                <td>Power Outage</td>
+                <td>Overload</td>
+                <td>Reduce Load</td>
+              </tr>
+              <tr>
+                <td>2025-01-24</td>
+                <td>14:30</td>
+                <td>Voltage Fluctuation</td>
+                <td>Equipment Fault</td>
+                <td>Replace Faulty Equipment</td>
+              </tr>
+              <tr>
+                <td>2025-01-25</td>
+                <td>10:00</td>
+                <td>Power Outage</td>
+                <td>Overload</td>
+                <td>Reduce Load</td>
+              </tr>
+              <tr>
+                <td>2025-01-24</td>
+                <td>14:30</td>
+                <td>Voltage Fluctuation</td>
+                <td>Equipment Fault</td>
+                <td>Replace Faulty Equipment</td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-
-    <!-- Baris bawah -->
-    <div class="row row-bottom">
-      <div class="box" id="bottom1">1</div>
-      <div class="box" id="bottom2">2</div>
-      <div class="box" id="bottom3">3</div>
-    </div>
-
-    <!-- SVG untuk garis -->
-    <svg class="lines">
-      <line id="line1-2" stroke="black" stroke-width="2" />
-      <line id="line2-3" stroke="black" stroke-width="2" />
-      <line id="line1-bottom2" stroke="black" stroke-width="2" />
-    </svg>
-  </div>
-
-  <script>
-    // Fungsi untuk menghitung posisi garis
-    function updateLines() {
-      const line1to2 = document.getElementById('line1-2');
-      const line2to3 = document.getElementById('line2-3');
-      const line1toBottom2 = document.getElementById('line1-bottom2');
-
-      const top1 = document.getElementById('top1').getBoundingClientRect();
-      const top2 = document.getElementById('top2').getBoundingClientRect();
-      const top3 = document.getElementById('top3').getBoundingClientRect();
-      const bottom2 = document.getElementById('bottom2').getBoundingClientRect();
-
-      // Menghubungkan div atas 1 ke div atas 2
-      line1to2.setAttribute('x1', top1.x + top1.width / 2);
-      line1to2.setAttribute('y1', top1.y + top1.height / 2 + window.scrollY);
-      line1to2.setAttribute('x2', top2.x + top2.width / 2);
-      line1to2.setAttribute('y2', top2.y + top2.height / 2 + window.scrollY);
-
-      // Menghubungkan div atas 2 ke div atas 3
-      line2to3.setAttribute('x1', top2.x + top2.width / 2);
-      line2to3.setAttribute('y1', top2.y + top2.height / 2 + window.scrollY);
-      line2to3.setAttribute('x2', top3.x + top3.width / 2);
-      line2to3.setAttribute('y2', top3.y + top3.height / 2 + window.scrollY);
-
-      // Menghubungkan garis antara div atas 1 ke div bawah 2
-      line1toBottom2.setAttribute('x1', top1.x + top1.width / 2);
-      line1toBottom2.setAttribute('y1', top1.y + top1.height / 2 + window.scrollY);
-      line1toBottom2.setAttribute('x2', bottom2.x + bottom2.width / 2);
-      line1toBottom2.setAttribute('y2', bottom2.y + bottom2.height / 2 + window.scrollY);
-    }
-
-    // Update posisi garis saat halaman dimuat atau diubah ukurannya
-    window.addEventListener('load', updateLines);
-    window.addEventListener('resize', updateLines);
-  </script>
-</body>
+  </body>
 </html>

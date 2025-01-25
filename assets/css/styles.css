@@ -6,17 +6,22 @@
 }
 
 /* Body */
-body {
+body,
+html {
+    height: 100%;
     font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #ffff;
+    background-color: #ffffff;
     color: #333;
-    margin: 0;
+}
+
+.container {
     display: flex;
     flex-direction: column;
+    height: 100vh;
     padding-left: 15px;
     padding-right: 15px;
 }
+
 
 /* Header */
 header {
@@ -24,6 +29,9 @@ header {
     justify-content: space-between;
     align-items: center;
     color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 header .icon-left,
@@ -52,12 +60,18 @@ header nav ul {
     list-style: none;
 }
 
+header nav ul .active {
+    color: #0093DD;
+}
+
+
 header nav ul li {
     margin: 0 10px;
 }
 
 header nav ul li a {
     font-size: 24px;
+    font-weight: 600;
     color: #424242;
     text-decoration: none;
     padding: 5px 10px;
@@ -65,7 +79,8 @@ header nav ul li a {
 }
 
 header nav ul li a:hover {
-    background: #555;
+    background: #0093dd23;
+    color: #0093DD;
     border-radius: 5px;
 }
 
@@ -76,12 +91,11 @@ footer {
     align-items: center;
     color: #000000;
     padding: 10px 20px;
-    position: fixed;
-    bottom: 0;
     left: 15px;
     /* Margin from the left */
     right: 15px;
     /* Margin from the right */
+    height: 40px;
 
     border: 2px solid #ECEFF1;
     border-radius: 4px;
@@ -93,53 +107,26 @@ footer {
 
 /* Main Content */
 main {
-    text-align: center;
-}
-
-/* ----------------------HOME PAGE-------------------------- */
-.container {
+    flex: 1;
     display: flex;
+    overflow: hidden;
+    /* padding-bottom: 15px; */
 }
 
-.left {
-    display: flex;
-    width: 80%;
-    height: 100%;
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.right {
-    width: 20%;
-    height: 100%;
-}
+@media (max-width: 768px) {
 
-.left .top,
-.left .bottom,
-.right {
-    border: 2px solid #ECEFF1;
-    border-radius: 4px;
-}
+    header,
+    footer {
+        text-align: left;
+        padding: 15px;
+    }
 
-.left .top {}
-
-.left .bottom{}
-
-.right {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 16px;
-}
-
-.input {
-    height: 56px;
-    width: 70%;
-    border: 1px solid #424242;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-}
-
-.h3{
-    margin-right: auto;
+    .content {
+        padding: 10px;
+    }
 }

@@ -1,10 +1,9 @@
 <footer>
     <div class="footer-left">
-    Developed by
-    Lab. Energy Management, Engineering Physics, ITB
-        
+        <p>Developed by</p>
+        <p>Lab. Energy Management, Engineering Physics, ITB</p>
     </div>
     <div class="footer-right">
-    Copyright &copy;2025
+        Copyright &copy;2025
     </div>
 </footer>
