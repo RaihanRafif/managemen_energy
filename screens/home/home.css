@@ -49,10 +49,10 @@
 .right {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 15px;
+    gap: 12px;
     align-items: start;
     width: 20%;
+    padding-top: 5px;
 }
 
 .right .title {
@@ -65,9 +65,11 @@
 }
 
 .right .input {
-    height: 56px;
+    height: auto;
+    padding-top: 12px;
+    padding-bottom: 12px;
     width: 70%;
-    border: 1px solid #424242;
+    border: 2px solid #424242;
     display: flex;
     align-items: center;
     justify-content: center;
