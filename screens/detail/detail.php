@@ -13,7 +13,7 @@
                     <img src="./assets/little yellow sun.png" alt="">
                 </div>
                 <div class="data-container">
-                    <p>Irradiance (W/m2)</p>
+                    <p>Irradiance (W/m&sup2;)</p>
                     <div class="data-value" id="irradiance">10.000</div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     <img src="./assets/thermometer.png" alt="">
                 </div>
                 <div class="data-container">
-                    <p>Ambient Temperature (C)</p>
+                    <p>Ambient Temperature (&deg;C)</p>
                     <div class="data-value" id="temperature">10.000</div>
                 </div>
             </div>
@@ -417,7 +417,7 @@
                                     <div class="data-value" id="batt-soc">2200</div>
                                 </div>
                                 <div class="data-container">
-                                    <p>Temperature (C)</p>
+                                    <p>Temperature (&deg;C)</p>
                                     <div class="data-value" id="batt-t">50</div>
                                 </div>
                             </div>

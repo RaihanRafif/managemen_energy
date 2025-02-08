@@ -71,11 +71,11 @@
                         </div>
                         <div class="data-container">
                             <h3>Weather Station</h3>
-                            <p class="data-title">Irradiance (W/m2)</p>
+                            <p class="data-title">Irradiance (W/m&sup2;)</p>
                             <div class="data-value" id="weather-irradiance">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title mt-5">Temperature C</p>
+                            <p class="data-title mt-5">Temperature &deg;C</p>
                             <div class="data-value" id="weather-temperature">
                                 <p>10.0000</p>
                             </div>
