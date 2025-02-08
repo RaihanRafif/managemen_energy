@@ -14,16 +14,16 @@
                 <div class="grid-container">
                     <div class="cell cell-data cell-1-1-2-1">
                         <div class="img-container">
-                            <img src="./assets/solar panels.png" alt="Solar Panels">
+                            <img src="./assets/solar panels.png" style="width: 100px;height: 100px;" alt="Solar Panels">
                         </div>
                         <div class="data-container">
                             <h3>PV</h3>
                             <p class="data-title">Power AC (W)</p>
-                            <div class="data-value">
+                            <div class="data-value" id="pv-pac">
                                 <p>10.0000</p>
                             </div>
                             <p class="data-title mt-5">Frequency (Hz)</p>
-                            <div class="data-value">
+                            <div class="data-value" id="pv-freq">
                                 <p>10.0000</p>
                             </div>
                         </div>
@@ -39,11 +39,11 @@
                         <div class="data-container">
                             <h3>BESS</h3>
                             <p class="data-title">Power (W)</p>
-                            <div class="data-value">
+                            <div class="data-value" id="bess-power">
                                 <p>10.0000</p>
                             </div>
                             <p class="data-title mt-5">SoC</p>
-                            <div class="data-value">
+                            <div class="data-value" id="bess-soc">
                                 <p>10.0000</p>
                             </div>
                         </div>
@@ -55,11 +55,11 @@
                         <div class="data-container">
                             <h3>Grid</h3>
                             <p class="data-title">P. Active</p>
-                            <div class="data-value">
+                            <div class="data-value" id="grid-active">
                                 <p>10.0000</p>
                             </div>
                             <p class="data-title">P. Reactive</p>
-                            <div class="data-value">
+                            <div class="data-value" id="grid-reactive">
                                 <p>10.0000</p>
                             </div>
                         </div>
@@ -72,19 +72,19 @@
                         <div class="data-container">
                             <h3>Weather Station</h3>
                             <p class="data-title">Irradiance (W/m2)</p>
-                            <div class="data-value">
+                            <div class="data-value" id="weather-irradiance">
                                 <p>10.0000</p>
                             </div>
                             <p class="data-title mt-5">Temperature C</p>
-                            <div class="data-value">
+                            <div class="data-value" id="weather-temperature">
                                 <p>10.0000</p>
                             </div>
                             <p class="data-title mt-5">Wind Speed (m/s)</p>
-                            <div class="data-value">
+                            <div class="data-value" id="weather-windspeed">
                                 <p>10.0000</p>
                             </div>
                             <p class="data-title mt-5">Humidity %</p>
-                            <div class="data-value">
+                            <div class="data-value" id="weather-humidity">
                                 <p>10.0000</p>
                             </div>
                         </div>
@@ -96,11 +96,11 @@
                         <div class="data-container">
                             <h3>Load</h3>
                             <p class="data-title">Power (W)</p>
-                            <div class="data-value">
+                            <div class="data-value" id="load_pm-power">
                                 <p>10.0000</p>
                             </div>
                             <p class="data-title mt-5">Frequency (Hz)</p>
-                            <div class="data-value">
+                            <div class="data-value" id="load_pm-freq">
                                 <p>10.0000</p>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                 </div>
             </div>
             <div class="bottom">
-                <div id="tester" style="width:75vw;height:90%;"></div>
+                <div id="tester" style="width:100%;height:100%;"></div>
             </div>
         </div>
 
@@ -133,84 +133,220 @@
                 <h2>Analysis</h2>
             </div>
             <h3>Today Production (kWh)</h3>
-            <div class="input">
+            <div class="input" id="today_production">
                 <p>10.0000</p>
             </div>
             <h3>Today Saving (Rp.)</h3>
-            <div class="input">
+            <div class="input" id="today_saving">
                 <p>10.0000</p>
             </div>
             <h3>Monthly Production (kWh)</h3>
-            <div class="input">
+            <div class="input" id="monthly_production">
                 <p>10.0000</p>
             </div>
             <h3>Monthly Saving (Rp.)</h3>
-            <div class="input">
+            <div class="input" id="monthly_saving">
                 <p>10.0000</p>
             </div>
             <h3>CO2 Reduced (kg)</h3>
-            <div class="input">
+            <div class="input" id="carbondioxyde_reduced">
                 <p>10.0000</p>
             </div>
             <h3>Total Energy (kWh)</h3>
-            <div class="input">
+            <div class="input" id="total_energy">
                 <p>10.0000</p>
             </div>
         </div>
     </div>
 
     <script>
-        const TESTER = document.getElementById('tester');
+        const gwp_co2 = 1
+        const fe_electric = 0.794
+        const electricity_bill = 1444.7
 
-        // Dummy data with multiple traces
-        const data = [{
-                x: [1, 2, 3, 4, 5],
-                y: [1, 2, 4, 8, 16],
-                mode: 'lines+markers',
-                name: 'Dataset A', // Name appears in the legend
-                line: {
-                    color: 'blue'
-                }
-            },
-            {
-                x: [1, 2, 3, 4, 5],
-                y: [16, 8, 4, 2, 1],
-                mode: 'lines+markers',
-                name: 'Dataset B', // Name appears in the legend
-                line: {
-                    color: 'red'
-                }
-            }
-        ];
+        function today_production(data) {
+            console.log(data);
 
-        // Layout configuration
-        const layout = {
-            title: 'Dummy Data Chart',
-            xaxis: {
-                title: 'X Axis Label'
-            },
-            yaxis: {
-                title: {
-                    text: 'Y Axis Label',
-                    standoff: 20, // Space between the label and the axis
-                    font: {
-                        size: 14, // Adjust font size
-                        color: 'black' // Adjust font color
+            return data / (60 * 1000)
+        }
+
+        function today_saving(data) {
+            return today_production(data) * electricity_bill
+        }
+
+        function monthly_production(data_monthly) {
+            return data_monthly / (60 * 1000)
+        }
+
+        function monthly_saving(data_monthly) {
+            return monthly_production(data_monthly) * electricity_bill
+        }
+
+        function total_energy(data_start_feb) {
+            return data_start_feb / (60 * 1000)
+        }
+
+        function carbondioxyde_reduced(data) {
+            return total_energy(data) * fe_electric
+        }
+
+        function fetchData() {
+            $.ajax({
+                url: "./screens/home/db.php", // File PHP untuk mengambil data
+                method: "GET",
+                success: function(response) {
+                    // Update data PV
+                    if (response.pv) {
+                        $("#pv-pac").text(response.pv.Pac || "N/A");
+                        $("#pv-freq").text(response.pv.Freq || "N/A");
+                    } else {
+                        $("#pv-pac").text("N/A");
+                        $("#pv-freq").text("N/A");
                     }
-                },
-                titlefont: {
-                    size: 16
-                },
-                titleangle: 0 // Make the label horizontal
-            },
-        };
 
+                    // Update response Batt
+                    if (response.batt) {
+                        $("#bess-power").text(response.batt.Pdc || "N/A");
+                        $("#bess-soc").text(response.batt.SOC || "N/A"); // Ganti 'value' dengan kolom yang sesuai
+                    } else {
+                        $("#bess-power").text("N/A");
+                        $("#bess-soc").text("N/A");
+                    }
 
-        // Create the plot
-        Plotly.newPlot(TESTER, data, layout);
+                    // Update response Batt
+                    if (response.grid) {
+                        $("#grid-active").text(response.grid.Pactive || "N/A");
+                        $("#grid-reactive").text(response.grid.Preactive || "N/A"); // Ganti 'value' dengan kolom yang sesuai
+                    } else {
+                        $("#grid-active").text("N/A");
+                        $("#grid-reactive").text("N/A");
+                    }
+
+                    // Update response Batt
+                    if (response.load_pm) {
+                        $("#load_pm-power").text(response.load_pm.Pac || "N/A");
+                        $("#load_pm-freq").text(response.load_pm.Freq || "N/A"); // Ganti 'value' dengan kolom yang sesuai
+                    } else {
+                        $("#load_pm-power").text("N/A");
+                        $("#load_pm-freq").text("N/A");
+                    }
+
+                    // Update response sunny_boy
+                    if (response.sunny_boy) {
+                        $("#sunny_boy-id").text(response.sunny_boy.id || "N/A");
+                        $("#sunny_boy-value").text(response.sunny_boy.SolarRad || "N/A"); // Ganti 'value' dengan kolom yang sesuai
+                        $("#sunny_boy-time").text(response.sunny_boy.timestamp || "N/A"); // Ganti 'timestamp' dengan kolom yang sesuai
+                    } else {
+                        $("#sunny_boy-id").text("N/A");
+                        $("#sunny_boy-value").text("N/A");
+                        $("#sunny_boy-time").text("N/A");
+                    }
+
+                    // Update response weather
+                    if (response.weather) {
+                        $("#weather-irradiance").text(response.weather.Irradiance || "N/A");
+                        $("#weather-temperature").text(response.weather.Temperature || "N/A");
+                        $("#weather-windspeed").text(response.weather.WindSpeed || "N/A"); // Ganti 'value' dengan kolom yang sesuai
+                        $("#weather-humidity").text(response.weather.Humidity || "N/A"); // Ganti 'timestamp' dengan kolom yang sesuai
+                    } else {
+                        $("#weather-irradiance").text("N/A");
+                        $("#weather-temperature").text("N/A");
+                        $("#weather-windspeed").text("N/A");
+                        $("#weather-humidity").text("N/A");
+                    }
+
+                    const allday_data = response.pv_allday
+                    const monthly_data = response.pv_allmonth
+                    const data_from_feb = response.pv_from_feb_2025
+
+                    const pdcValues = allday_data.map(entry => parseFloat(entry.Pdc));
+                    console.log("111 : ", allday_data);
+
+                    const pdcMonthlyValues = monthly_data.map(entry => parseFloat(entry.Pdc));
+                    const pdcStartFebValues = data_from_feb.map(entry => parseFloat(entry.Pdc));
+
+                    $("#today_production").text(today_production(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+
+                    $("#today_saving").text(today_saving(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+
+                    $("#monthly_production").text(monthly_production(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+
+                    $("#monthly_saving").text(monthly_saving(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+
+                    $("#total_energy").text(total_energy(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+
+                    $("#carbondioxyde_reduced").text(carbondioxyde_reduced(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+
+                    if (response.pv_allday) {
+                        // Create an object to store aggregated data by hour
+                        const hourlyData = {};
+
+                        // Aggregate data by hour
+                        response.pv_allday.forEach(entry => {
+                            const date = new Date(entry.timestamp);
+                            const hour = date.getHours();
+                            const key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${hour}:00:00`;
+
+                            if (!hourlyData[key]) {
+                                hourlyData[key] = 0;
+                            }
+
+                            hourlyData[key] += parseFloat(entry.Pdc);
+                        });
+
+                        // Prepare data for plotting
+                        const timestamps = Object.keys(hourlyData);
+                        const totalPdcValues = timestamps.map(key => hourlyData[key]);
+
+                        const data = [{
+                            x: timestamps,
+                            y: totalPdcValues,
+                            mode: 'lines+markers',
+                            name: 'Total Pdc Hourly',
+                            line: {
+                                color: 'blue'
+                            }
+                        }];
+
+                        const layout = {
+                            title: 'PV Data Hourly Total',
+                            xaxis: {
+                                title: 'Hour',
+                                type: 'date',
+                            },
+                            yaxis: {
+                                title: {
+                                    text: 'Total Pdc (Power)',
+                                    standoff: 20,
+                                    font: {
+                                        size: 14,
+                                        color: 'black'
+                                    }
+                                },
+                                autorange: true,
+                                rangemode: 'tozero',
+                            },
+                        };
+
+                        const TESTER = document.getElementById('tester');
+                        Plotly.newPlot(TESTER, data, layout);
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                },
+            });
+        }
+
+        // Fetch data setiap 5 detik
+        setInterval(fetchData, 5000); // 5000 ms = 5 detik
+
+        // Fetch data pertama kali saat halaman dimuat
+        $(document).ready(function() {
+            fetchData();
+        });
     </script>
-
-
 </body>
 
 
