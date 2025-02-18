@@ -476,26 +476,26 @@
                     console.log("LKKK : ", response.string_data.V_str1);
 
 
-                    $("#str1-v").text(response.string_data.V_str1 || "N/A");
-                    $("#str2-v").text(response.string_data.V_str2 || "N/A");
-                    $("#str3-v").text(response.string_data.V_str3 || "N/A");
-                    $("#str4-v").text(response.string_data.V_str4 || "N/A");
-                    $("#str1-c").text(response.string_data.I_str1 || "N/A");
-                    $("#str2-c").text(response.string_data.I_str2 || "N/A");
-                    $("#str3-c").text(response.string_data.I_str3 || "N/A");
-                    $("#str4-c").text(response.string_data.I_str4 || "N/A");
-                    $("#str1-p").text(response.string_data.P_str1 || "N/A");
-                    $("#str2-p").text(response.string_data.P_str2 || "N/A");
-                    $("#str3-p").text(response.string_data.P_str3 || "N/A");
-                    $("#str4-p").text(response.string_data.P_str4 || "N/A");
-                    $("#str1-pl").text(response.string_data.P_loss_str1 || "N/A");
-                    $("#str2-pl").text(response.string_data.P_loss_str2 || "N/A");
-                    $("#str3-pl").text(response.string_data.P_loss_str3 || "N/A");
-                    $("#str4-pl").text(response.string_data.P_loss_str4 || "N/A");
-                    $("#str1-vl").text(response.string_data.V_loss_str1 || "N/A");
-                    $("#str2-vl").text(response.string_data.V_loss_str2 || "N/A");
-                    $("#str3-vl").text(response.string_data.V_loss_str3 || "N/A");
-                    $("#str4-vl").text(response.string_data.V_loss_str4 || "N/A");
+                    $("#str1-v").text(parseFloat(response.string_data.V_str1).toFixed(2) || "N/A");
+                    $("#str2-v").text(parseFloat(response.string_data.V_str2).toFixed(2) || "N/A");
+                    $("#str3-v").text(parseFloat(response.string_data.V_str3).toFixed(2) || "N/A");
+                    $("#str4-v").text(parseFloat(response.string_data.V_str4).toFixed(2) || "N/A");
+                    $("#str1-c").text(parseFloat(response.string_data.I_str1).toFixed(2) || "N/A");
+                    $("#str2-c").text(parseFloat(response.string_data.I_str2).toFixed(2) || "N/A");
+                    $("#str3-c").text(parseFloat(response.string_data.I_str3).toFixed(2) || "N/A");
+                    $("#str4-c").text(parseFloat(response.string_data.I_str4).toFixed(2) || "N/A");
+                    $("#str1-p").text(parseFloat(response.string_data.P_str1).toFixed(2) || "N/A");
+                    $("#str2-p").text(parseFloat(response.string_data.P_str2).toFixed(2) || "N/A");
+                    $("#str3-p").text(parseFloat(response.string_data.P_str3).toFixed(2) || "N/A");
+                    $("#str4-p").text(parseFloat(response.string_data.P_str4).toFixed(2) || "N/A");
+                    $("#str1-pl").text(parseFloat(response.string_data.P_loss_str1).toFixed(2) || "N/A");
+                    $("#str2-pl").text(parseFloat(response.string_data.P_loss_str2).toFixed(2) || "N/A");
+                    $("#str3-pl").text(parseFloat(response.string_data.P_loss_str3).toFixed(2) || "N/A");
+                    $("#str4-pl").text(parseFloat(response.string_data.P_loss_str4).toFixed(2) || "N/A");
+                    $("#str1-vl").text(parseFloat(response.string_data.V_loss_str1).toFixed(2) || "N/A");
+                    $("#str2-vl").text(parseFloat(response.string_data.V_loss_str2).toFixed(2) || "N/A");
+                    $("#str3-vl").text(parseFloat(response.string_data.V_loss_str3).toFixed(2) || "N/A");
+                    $("#str4-vl").text(parseFloat(response.string_data.V_loss_str4).toFixed(2) || "N/A");
 
                     console.log(response.string_data.Status_inv2);
                     
@@ -511,28 +511,28 @@
                     $("#sb2-f").text(response.string_data.Frek_out_AC2 || "N/A");
                     $("#sb2-s").text(inverter_status_code(parseInt(response.string_data.Status_inv2)) || "N/A");
 
-                    $("#grid-v").text(response.grid.Vac || "N/A");
-                    $("#grid-c").text(response.grid.Iac || "N/A");
-                    $("#grid-pa").text(response.grid.Pactive || "N/A");
-                    $("#grid-pr").text(response.grid.Preactive || "N/A");
-                    $("#grid-freq").text(response.grid.Freq || "N/A");
-                    $("#si-v").text(response.grid.Vac || "N/A");
-                    $("#si-c").text(response.grid.Iac || "N/A");
-                    $("#si-pa").text(response.grid.Pactive || "N/A");
-                    $("#si-pr").text(response.grid.Preactive || "N/A");
-                    $("#si-freq").text(response.grid.Freq || "N/A");
+                    $("#grid-v").text(parseFloat(response.grid.Vac).toFixed(2) || "N/A");
+                    $("#grid-c").text(parseFloat(response.grid.Iac).toFixed(2) || "N/A");
+                    $("#grid-pa").text(parseFloat(response.grid.Pactive).toFixed(2) || "N/A");
+                    $("#grid-pr").text(parseFloat(response.grid.Preactive).toFixed(2) || "N/A");
+                    $("#grid-freq").text(parseFloat(response.grid.Freq).toFixed(2) || "N/A");
+                    $("#si-v").text(parseFloat(response.grid.Vac).toFixed(2) || "N/A");
+                    $("#si-c").text(parseFloat(response.grid.Iac).toFixed(2) || "N/A");
+                    $("#si-pa").text(parseFloat(response.grid.Pactive).toFixed(2) || "N/A");
+                    $("#si-pr").text(parseFloat(response.grid.Preactive).toFixed(2) || "N/A");
+                    $("#si-freq").text(parseFloat(response.grid.Freq).toFixed(2) || "N/A");
 
-                    $("#batt-v").text(response.batt.Vdc || "N/A");
-                    $("#batt-c").text(response.batt.Idc || "N/A");
-                    $("#batt-p").text(response.batt.Pdc || "N/A");
-                    $("#batt-soc").text(response.batt.SOC || "N/A");
-                    $("#batt-t").text(response.batt.Temp || "N/A");
+                    $("#batt-v").text(parseFloat(response.batt.Vdc).toFixed(2) || "N/A");
+                    $("#batt-c").text(parseFloat(response.batt.Idc).toFixed(2) || "N/A");
+                    $("#batt-p").text(parseFloat(response.batt.Pdc).toFixed(2) || "N/A");
+                    $("#batt-soc").text(parseFloat(response.batt.SOC).toFixed(2) || "N/A");
+                    $("#batt-t").text(parseFloat(response.batt.Temp).toFixed(2) || "N/A");
 
-                    $("#l-v").text(response.load_pm.Vac || "N/A");
-                    $("#l-c").text(response.load_pm.Iac || "N/A");
-                    $("#l-p").text(response.load_pm.Pac || "N/A");
-                    $("#l-pf").text(response.load_pm.Pfactor || "N/A");
-                    $("#l-freq").text(response.load_pm.Freq || "N/A");
+                    $("#l-v").text(parseFloat(response.load_pm.Vac).toFixed(2) || "N/A");
+                    $("#l-c").text(parseFloat(response.load_pm.Iac).toFixed(2) || "N/A");
+                    $("#l-p").text(parseFloat(response.load_pm.Pac).toFixed(2) || "N/A");
+                    $("#l-pf").text(parseFloat(response.load_pm.Pfactor).toFixed(2) || "N/A");
+                    $("#l-freq").text(parseFloat(response.load_pm.Freq).toFixed(2) || "N/A");
                 },
                 error: function(xhr, status, error) {
                     console.error("Error fetching data:", error);

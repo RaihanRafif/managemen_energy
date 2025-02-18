@@ -4,10 +4,10 @@
     </div>
     <nav>
         <ul>
-            <li><a href="index.php?page=home" class="<?= ($_SERVER['REQUEST_URI'] == "/managemen_energy/index.php?page=home" || $_SERVER['REQUEST_URI'] == "/managemen_energy/") ? 'active' : '' ?>">Home</a></li>
-            <li><a href="index.php?page=detail" class="<?= ($_SERVER['REQUEST_URI'] == "/managemen_energy/index.php?page=detail") ? 'active' : '' ?>">Detail</a></li>
-            <li><a href="index.php?page=curve" class="<?= ($_SERVER['REQUEST_URI'] == "/managemen_energy/index.php?page=curve") ? 'active' : '' ?>">Curve</a></li>
-            <li><a href="index.php?page=event" class="<?= ($_SERVER['REQUEST_URI'] == "/managemen_energy/index.php?page=event") ? 'active' : '' ?>">Event</a></li>
+            <li><a href="index.php?page=home" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=home') !== false) ? 'active' : '' ?>">Home</a></li>
+            <li><a href="index.php?page=detail" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=detail') !== false) ? 'active' : '' ?>">Detail</a></li>
+            <li><a href="index.php?page=curve" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=curve') !== false) ? 'active' : '' ?>">Curve</a></li>
+            <li><a href="index.php?page=event" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=event') !== false) ? 'active' : '' ?>">Event</a></li>
         </ul>
     </nav>
     <div class="icon-right">

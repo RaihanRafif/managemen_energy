@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./screens/curve/curve.css">
+    <script src="./assets/js/plotly-2.35.2.min.js"></script>
+</head>
+
+<body>
+    <div class="container-menu">
+        <div class="top-side">
+            <div class="date-picker">
+                <button class="toggle-btn " id="monthly" onclick="togglePicker('pickerYearMonth')">Pick Year & Month</button>
+                <button class="toggle-btn active" id="daily" onclick="togglePicker('pickerFullDate')">Pick Year, Month & Date</button>
+                <div class="picker-container" id="pickerYearMonth">
+                    <h2>Select Year and Month</h2>
+
+                    <select id="year1"></select>
+                    <select id="month1">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+
+                    <br>
+                    <button class="submit-btn" onclick="getSelectedDate('year1', 'month1', 'output1','',status='monthly')">Submit</button>
+                    <p class="output" id="output1"></p>
+                </div>
+                <div class="picker-container" id="pickerFullDate">
+                    <h2>Select Year, Month & Date</h2>
+
+                    <select id="year2"></select>
+                    <select id="month2" onchange="updateDays()">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <select id="day"></select>
+
+                    <br>
+                    <button class="submit-btn" onclick="getSelectedDate('year2', 'month2', 'output2', 'day',status='daily')">Submit</button>
+                    <p class="output" id="output2"></p>
+                </div>
+            </div>
+            <nav data-target="daily" onclick="switchPage('daily')" class="active">Daily</nav>
+            <nav data-target="monthly" onclick="switchPage('monthly')">Monthly</nav>
+        </div>
+        <div class="bottom-side">
+            <div id="daily" class="page active">
+                <div class="left-side">
+                    <div id="tester-daily" style="width:75vw;height:90%;"></div>
+                </div>
+            </div>
+            <div id="monthly" class="page">
+                <div class="left-side">
+                    <div id="tester-monthly" style="width:75vw;height:90%;"></div>
+                </div>
+            </div>
+            <div class="right-side">
+                <div class="title">
+                    <h2>Analysis</h2>
+                </div>
+                <h3>Today Production (kWh)</h3>
+                <div class="input" id="today_production">
+                    <p></p>
+                </div>
+                <h3>Today Saving (Rp.)</h3>
+                <div class="input" id="today_saving">
+                    <p></p>
+                </div>
+                <h3>Monthly Production (kWh)</h3>
+                <div class="input" id="monthly_production">
+                    <p></p>
+                </div>
+                <h3>Monthly Saving (Rp.)</h3>
+                <div class="input" id="monthly_saving">
+                    <p></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const fe_electric = 0.794;
+        const electricity_bill = 1444.7;
+
+        let currentPage = 'daily'; // Track the current page
+        let stringData = []; // Global variable to store data
+        let visibilityState = {}; // Store visibility state of traces
+
+        //date-picker
+        // Populate year dropdown dynamically
+        function populateYears(selectId) {
+            const yearSelect = document.getElementById(selectId);
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i >= currentYear - 100; i--) {
+                let option = document.createElement("option");
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+        }
+
+        populateYears("year1");
+        populateYears("year2");
+
+        // Function to update days based on selected month & year (Leap year support)
+        function updateDays() {
+            const month = document.getElementById("month2").value;
+            const year = document.getElementById("year2").value;
+            const daySelect = document.getElementById("day");
+
+            const daysInMonth = new Date(year, month, 0).getDate(); // Get last day of selected month
+            daySelect.innerHTML = ""; // Clear previous options
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                let option = document.createElement("option");
+                option.value = i < 10 ? "0" + i : i;
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+        }
+
+        updateDays(); // Initialize days dropdown
+
+        // Function to toggle visibility of pickers
+        function togglePicker(id) {
+            document.getElementById("pickerYearMonth").style.display = "none";
+            document.getElementById("pickerFullDate").style.display = "none";
+
+            const picker = document.getElementById(id);
+            picker.style.display = picker.style.display === "none" ? "block" : "none";
+        }
+
+        // Function to get selected date
+        function getSelectedDate(yearId, monthId, outputId, dayId = null, status) {
+            const year = document.getElementById(yearId).value;
+            const month = document.getElementById(monthId).value;
+            let dateText = `${year}-${month}`;
+
+            if (dayId) {
+                const day = document.getElementById(dayId).value;
+                dateText += `-${day}`;
+            }
+
+            const pickerContainer = document.querySelectorAll(".picker-container")
+
+            pickerContainer.forEach(container => {
+                container.style.display = "none"
+            });
+
+            if (status == 'daily') {
+                fetchDataDaily(dateText);
+            } else {
+                fetchDataMonthly(dateText);
+            }
+
+            // Fetch and update data based on the selected date/month
+
+        }
+
+        // Hide popups when clicking outside
+        document.addEventListener("click", function(event) {
+            const pickers = document.querySelectorAll(".picker-container");
+            const buttons = document.querySelectorAll(".toggle-btn");
+
+            let isInsidePicker = Array.from(pickers).some(picker => picker.contains(event.target));
+            let isButton = Array.from(buttons).some(button => button.contains(event.target));
+
+            if (!isInsidePicker && !isButton) {
+                pickers.forEach(picker => picker.style.display = "none");
+            }
+        });
+        //
+
+        function today_production(data) {
+            return data / (60 * 1000);
+        }
+
+        function today_saving(data) {
+            return today_production(data) * electricity_bill;
+        }
+
+        function monthly_production(data_monthly) {
+            return data_monthly / (60 * 1000);
+        }
+
+        function monthly_saving(data_monthly) {
+            return monthly_production(data_monthly) * electricity_bill;
+        }
+
+        function switchPage(pageId) {
+            currentPage = pageId; // Update the current page
+            const pages = document.querySelectorAll('.page');
+            const navs = document.querySelectorAll('.top-side nav');
+
+            const datePickerButtons = document.querySelectorAll('.toggle-btn');
+
+            datePickerButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.id === pageId) {
+                    btn.classList.add('active');
+                }
+            });
+
+            pages.forEach(page => {
+                page.classList.remove('active');
+                if (page.id === pageId) {
+                    page.classList.add('active');
+                }
+            });
+
+            navs.forEach(nav => {
+                nav.classList.remove('active');
+                if (nav.dataset.target === pageId) {
+                    nav.classList.add('active');
+                }
+            });
+
+            renderChart(pageId);
+            updateAnalysis(pageId);
+        }
+
+        const layout = {
+            title: '',
+            xaxis: {
+                title: 'Timestamp'
+            },
+            yaxis: {
+                title: {
+                    text: 'Energy',
+                    standoff: 20,
+                    font: {
+                        size: 14,
+                        color: 'black'
+                    }
+                },
+                titlefont: {
+                    size: 16
+                },
+                titleangle: 0
+            }
+        };
+
+        function renderChart(pageId) {
+            let chartData;
+            if (pageId === 'daily') {
+                const aggregatedData = aggregateData(stringData, 'hourly');
+                chartData = prepareChartData(aggregatedData, 'hourly');
+                Plotly.react('tester-daily', chartData, layout);
+            } else if (pageId === 'monthly') {
+                const aggregatedData = aggregateData(stringData, 'daily');
+                chartData = prepareChartData(aggregatedData, 'daily');
+                Plotly.react('tester-monthly', chartData, layout);
+            }
+        }
+
+        function updateAnalysis(pageId) {
+            const allday_data = stringData;
+            const monthly_data = stringData;
+
+            const pdcValues = allday_data.map(entry => parseFloat(entry.Pdc));
+            const pdcMonthlyValues = monthly_data.map(entry => parseFloat(entry.Pdc));
+
+            if (pageId === 'daily') {
+                $("#today_production").text(today_production(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                $("#today_saving").text(today_saving(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+            } else if (pageId === 'monthly') {
+                $("#monthly_production").text(monthly_production(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                $("#monthly_saving").text(monthly_saving(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+            }
+        }
+
+        function aggregateData(data, interval) {
+            const aggregated = {};
+            data.forEach(item => {
+                const date = new Date(item.timestamp);
+                let key;
+                if (interval === 'hourly') {
+                    key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:00`;
+                } else if (interval === 'daily') {
+                    key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+                }
+
+                if (!aggregated[key]) {
+                    aggregated[key] = {
+                        P_str1: 0,
+                        P_str2: 0,
+                        P_str3: 0,
+                        P_str4: 0,
+                        count: 0
+                    };
+                }
+
+                aggregated[key].P_str1 += parseFloat(item.P_str1);
+                aggregated[key].P_str2 += parseFloat(item.P_str2);
+                aggregated[key].P_str3 += parseFloat(item.P_str3);
+                aggregated[key].P_str4 += parseFloat(item.P_str4);
+                aggregated[key].count += 1;
+            });
+
+            // Calculate average
+            for (let key in aggregated) {
+                aggregated[key].P_str1 /= aggregated[key].count;
+                aggregated[key].P_str2 /= aggregated[key].count;
+                aggregated[key].P_str3 /= aggregated[key].count;
+                aggregated[key].P_str4 /= aggregated[key].count;
+            }
+
+            return aggregated;
+        }
+
+        function prepareChartData(aggregatedData, interval) {
+            const x = [];
+            const y1 = [];
+            const y2 = [];
+            const y3 = [];
+            const y4 = [];
+
+            for (let key in aggregatedData) {
+                if (interval === 'daily') {
+                    // Only use the date part for 'monthly'
+                    const [year, month, day] = key.split(' ')[0].split('-');
+                    x.push(`${year}-${month}-${day}`);
+                } else {
+                    x.push(key);
+                }
+                y1.push(aggregatedData[key].P_str1);
+                y2.push(aggregatedData[key].P_str2);
+                y3.push(aggregatedData[key].P_str3);
+                y4.push(aggregatedData[key].P_str4);
+            }
+
+            return [{
+                    x,
+                    y: y1,
+                    mode: 'lines+markers',
+                    name: 'P_str1',
+                    line: {
+                        color: 'blue'
+                    },
+                    visible: visibilityState['P_str1'] !== undefined ? visibilityState['P_str1'] : true
+                },
+                {
+                    x,
+                    y: y2,
+                    mode: 'lines+markers',
+                    name: 'P_str2',
+                    line: {
+                        color: 'green'
+                    },
+                    visible: visibilityState['P_str2'] !== undefined ? visibilityState['P_str2'] : true
+                },
+                {
+                    x,
+                    y: y3,
+                    mode: 'lines+markers',
+                    name: 'P_str3',
+                    line: {
+                        color: 'red'
+                    },
+                    visible: visibilityState['P_str3'] !== undefined ? visibilityState['P_str3'] : true
+                },
+                {
+                    x,
+                    y: y4,
+                    mode: 'lines+markers',
+                    name: 'P_str4',
+                    line: {
+                        color: 'orange'
+                    },
+                    visible: visibilityState['P_str4'] !== undefined ? visibilityState['P_str4'] : true
+                }
+            ];
+        }
+
+        function fetchData() {
+            $.ajax({
+                url: "./screens/curve/db.php",
+                method: "GET",
+                success: function(response) {
+                    stringData = response.string_data;
+
+                    const allday_data = response.pv_allday;
+                    const monthly_data = response.pv_allmonth;
+
+                    const pdcValues = allday_data.map(entry => parseFloat(entry.Pdc));
+                    const pdcMonthlyValues = monthly_data.map(entry => parseFloat(entry.Pdc));
+
+                    $("#today_production").text(today_production(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                    $("#today_saving").text(today_saving(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                    $("#monthly_production").text(monthly_production(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                    $("#monthly_saving").text(monthly_saving(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+
+                    // Store the current visibility state
+                    const chartDivId = currentPage === 'daily' ? 'tester-daily' : 'tester-monthly';
+                    const chartDiv = document.getElementById(chartDivId);
+                    if (chartDiv && chartDiv.data) {
+                        chartDiv.data.forEach((trace, index) => {
+                            visibilityState[trace.name] = trace.visible;
+                        });
+                    }
+
+                    console.log("11111", currentPage);
+
+
+                    renderChart(currentPage); // Update the chart based on the current page
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                },
+            });
+        }
+
+        function fetchDataDaily(date) {
+            $.ajax({
+                url: "./screens/curve/fetchSpesificDate.php",
+                data: {
+                    date
+                },
+                method: "GET",
+                success: function(response) {
+                    console.log("1111 : ",stringData);
+                    
+                    stringData = response.pv_allday;
+                    console.log("2222 : ",stringData);
+
+                    const allday_data = response.pv_allday;
+
+                    const chartDiv = document.getElementById('tester-daily');
+                    if (chartDiv && chartDiv.data) {
+                        chartDiv.data.forEach((trace, index) => {
+                            visibilityState[trace.name] = trace.visible;
+                        });
+                    }
+
+                    renderChart("daily"); // Update the chart based on the current page
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                },
+            });
+        }
+
+        // // Fetch data every 5 seconds
+        // setInterval(fetchData, 5000);
+
+        // Fetch data on page load
+        $(document).ready(function() {
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            const currentMonth = today.getMonth() + 1; // Months are 0-based, so we add 1.
+
+            document.getElementById("year1").value = currentYear;
+            document.getElementById("month1").value = currentMonth < 10 ? "0" + currentMonth : currentMonth;
+
+            // Set default year, month, and day for 'pickerFullDate'
+            document.getElementById("year2").value = currentYear;
+            document.getElementById("month2").value = currentMonth < 10 ? "0" + currentMonth : currentMonth;
+            updateDays(); // Update days based on current month
+
+            const currentDate = today.getDate();
+            document.getElementById("day").value = currentDate < 10 ? "0" + currentDate : currentDate;
+
+            fetchData();
+            switchPage(currentPage); // Initial render
+        });
+    </script>
+</body>
+
+</html>

@@ -8,6 +8,7 @@
 }
 
 .top-side {
+    position: relative;
     display: flex;
     padding: 0.5rem;
     justify-content: center;
@@ -48,7 +49,14 @@
     border: 2px solid #eaeaea;
     border-radius: 4px;
     padding-top: 5px;
+    display: none;
 }
+
+.right-side.active {
+    display: flex;
+}
+
+
 
 
 .right-side .title {
@@ -61,7 +69,7 @@
 }
 
 .right-side .input {
-    height: auto;
+    height: 10%;
     padding-top: 12px;
     padding-bottom: 12px;
     width: 70%;
@@ -87,4 +95,88 @@
 .page.active {
     display: flex;
     gap: 10px;
+}
+
+.export-btn {
+    display: none;
+    height: max-content;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 4px 8px;
+    font-weight: 500;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.export-btn.active {
+    display: flex;
+}
+
+/* ------------------Date Picker------------------------ */
+.picker-container {
+    background: white;
+    text-align: center;
+    /* Initially hidden */
+    position: absolute;
+    left: 0;
+    z-index: 1000;
+    display: none;
+}
+
+.picker-container.active {
+    display: block;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.toggle-btn {
+    display: none;
+    position: absolute;
+    left: 0;
+}
+
+
+.toggle-btn.active {
+    display: flex;
+    gap: 10px;
+}
+
+.toggle-btn,
+.submit-btn {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.toggle-btn:hover {
+    background-color: #0056b3;
+}
+
+.submit-btn {
+    background-color: #28a745;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+}
+
+.output {
+    margin-top: 10px;
+    font-weight: bold;
 }

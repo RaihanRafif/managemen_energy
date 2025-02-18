@@ -124,6 +124,7 @@
                 </div>
             </div>
             <div class="bottom">
+                <div id="current-date" class="current_date"></div>
                 <div id="tester" style="width:100%;height:100%;"></div>
             </div>
         </div>
@@ -225,7 +226,7 @@
                     // Update response Batt
                     if (response.load_pm) {
                         $("#load_pm-power").text(response.load_pm.Pac || "N/A");
-                        $("#load_pm-freq").text(response.load_pm.Freq || "N/A"); // Ganti 'value' dengan kolom yang sesuai
+                        $("#load_pm-freq").text(parseFloat(response.load_pm.Freq).toFixed(2) || "N/A"); // Ganti 'value' dengan kolom yang sesuai
                     } else {
                         $("#load_pm-power").text("N/A");
                         $("#load_pm-freq").text("N/A");
@@ -256,11 +257,12 @@
                     }
 
                     const allday_data = response.pv_allday
+                    console.log("allday_data : ", allday_data);
+
                     const monthly_data = response.pv_allmonth
                     const data_from_feb = response.pv_from_feb_2025
 
                     const pdcValues = allday_data.map(entry => parseFloat(entry.Pdc));
-                    console.log("111 : ", allday_data);
 
                     const pdcMonthlyValues = monthly_data.map(entry => parseFloat(entry.Pdc));
                     const pdcStartFebValues = data_from_feb.map(entry => parseFloat(entry.Pdc));
@@ -277,46 +279,58 @@
 
                     $("#carbondioxyde_reduced").text(carbondioxyde_reduced(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
 
-                    if (response.pv_allday) {
-                        // Create an object to store aggregated data by hour
-                        const hourlyData = {};
+                    if (allday_data.length > 0) {
+                        // Step 1: Find the latest timestamp
+                        const latestTimestamp = new Date(Math.max(...allday_data.map(entry => new Date(entry.timestamp))));
+                        const latestHour = latestTimestamp.getHours();
+                        const latestDate = latestTimestamp.toISOString().split('T')[0]; // Get the date part
 
-                        // Aggregate data by hour
-                        response.pv_allday.forEach(entry => {
-                            const date = new Date(entry.timestamp);
-                            const hour = date.getHours();
-                            const key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${hour}:00:00`;
+                        // Step 2: Calculate the start of the hour
+                        const startOfHour = new Date(`${latestDate}T${latestHour.toString().padStart(2, '0')}:00:00`);
 
-                            if (!hourlyData[key]) {
-                                hourlyData[key] = 0;
+                        // Step 3: Aggregate data by minute
+                        const minuteData = {};
+                        allday_data.forEach(entry => {
+                            const entryDate = new Date(entry.timestamp);
+                            const entryMinute = entryDate.getMinutes();
+                            const entryHour = entryDate.getHours();
+
+                            // Check if the entry is within the latest hour
+                            if (entryHour === latestHour && entryDate >= startOfHour) {
+                                const key = `${entryDate.toISOString().split('T')[0]}T${entryHour.toString().padStart(2, '0')}:${entryMinute.toString().padStart(2, '0')}:00`;
+                                if (!minuteData[key]) {
+                                    minuteData[key] = 0;
+                                }
+                                minuteData[key] += parseFloat(entry.Pdc);
                             }
-
-                            hourlyData[key] += parseFloat(entry.Pdc);
                         });
 
                         // Prepare data for plotting
-                        const timestamps = Object.keys(hourlyData);
-                        const totalPdcValues = timestamps.map(key => hourlyData[key]);
+                        const timestamps = Object.keys(minuteData);
+                        const totalPdcValues = timestamps.map(key => minuteData[key]);
+
+                        console.log("timestamps : ", timestamps);
+                        console.log("totalPdcValues : ", totalPdcValues);
 
                         const data = [{
                             x: timestamps,
                             y: totalPdcValues,
                             mode: 'lines+markers',
-                            name: 'Total Pdc Hourly',
+                            name: 'Total Pdc Minute',
                             line: {
                                 color: 'blue'
                             }
                         }];
 
                         const layout = {
-                            title: 'PV Data Hourly Total',
+                            title: 'PV Data',
                             xaxis: {
-                                title: 'Hour',
+                                title: 'Time',
                                 type: 'date',
                             },
                             yaxis: {
                                 title: {
-                                    text: 'Total Pdc (Power)',
+                                    text: 'Power Production (kW)',
                                     standoff: 20,
                                     font: {
                                         size: 14,
@@ -332,6 +346,8 @@
                         Plotly.newPlot(TESTER, data, layout);
                     }
 
+
+
                 },
                 error: function(xhr, status, error) {
                     console.error("Error fetching data:", error);
@@ -341,6 +357,21 @@
 
         // Fetch data setiap 5 detik
         setInterval(fetchData, 5000); // 5000 ms = 5 detik
+
+        function displayCurrentDate() {
+            const currentDateElement = document.getElementById('current-date');
+            const now = new Date();
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long'
+            };
+            currentDateElement.textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        // Call the function to display the date when the page loads
+        document.addEventListener('DOMContentLoaded', displayCurrentDate);
 
         // Fetch data pertama kali saat halaman dimuat
         $(document).ready(function() {

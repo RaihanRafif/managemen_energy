@@ -134,3 +134,32 @@ main {
         padding: 10px;
     }
 }
+
+@media (max-height: 750px) {
+    header {
+        height: 24px;
+    }
+
+    header nav {
+        height: 48px;
+    }
+
+    header nav ul li a {
+        font-size: 14px;
+    }
+
+    header .icon-left img,
+    header .icon-right img {
+        height: 30px;
+        width: auto;
+        margin-top: 10px;
+    }
+
+    .right h3{
+        margin-left: 4px;
+    }
+    .right h2{
+        font-size: 24px;
+    }
+
+}
