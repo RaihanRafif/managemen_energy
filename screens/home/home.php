@@ -137,7 +137,7 @@
             <div class="input" id="today_production">
                 <p>10.0000</p>
             </div>
-            <h3>Today Saving (Rp.)</h3>
+            <h3>Today Saving </h3>
             <div class="input" id="today_saving">
                 <p>10.0000</p>
             </div>
@@ -145,7 +145,7 @@
             <div class="input" id="monthly_production">
                 <p>10.0000</p>
             </div>
-            <h3>Monthly Saving (Rp.)</h3>
+            <h3>Monthly Saving </h3>
             <div class="input" id="monthly_saving">
                 <p>10.0000</p>
             </div>
@@ -165,9 +165,14 @@
         const fe_electric = 0.794
         const electricity_bill = 1444.7
 
-        function today_production(data) {
-            console.log(data);
+        let currentPage = 'daily'; // Track the current page
+        let data = {
+            'daily': [],
+        }; // Global variable to store data
+        let visibilityState = {}; // Store visibility state of traces
 
+
+        function today_production(data) {
             return data / (60 * 1000)
         }
 
@@ -190,6 +195,120 @@
         function carbondioxyde_reduced(data) {
             return total_energy(data) * fe_electric
         }
+
+        function parseTimestamp(timestamp) {
+            return new Date(timestamp.replace(" ", "T"));
+        }
+
+        const layoutHourly = {
+            title: '',
+            xaxis: {
+                title: 'Time'
+            },
+            yaxis: {
+                title: {
+                    text: 'Energy Production (kWh)',
+                    standoff: 20,
+                    font: {
+                        size: 14,
+                        color: 'black'
+                    }
+                },
+                titlefont: {
+                    size: 16
+                },
+                titleangle: 0
+            }
+        };
+
+        function renderChart() {
+            let chartData;
+
+            chartData = prepareChartData(data.daily, "hourly");
+            Plotly.react("tester", chartData, layoutHourly);
+        }
+
+        function prepareChartData(data, interval) {
+            const x = [];
+            const y1 = [];
+            const y2 = [];
+            const y3 = [];
+            const y4 = [];
+            const y_total = [];
+
+            data.forEach((item) => {
+                y1.push(item.P_str1);
+                y2.push(item.P_str2);
+                y3.push(item.P_str3);
+                y4.push(item.P_str4);
+                y_total.push(item.P_str1 + item.P_str2 + item.P_str3 + item.P_str4);
+                x.push(item.hour);
+            });
+
+            return [{
+                    x,
+                    y: y1,
+                    type: "scatter",
+                    mode: "lines",
+                    name: "P_str1",
+                    line: {
+                        color: "blue",
+                        shape: "spline" // Membuat garis menjadi lebih halus
+                    },
+                    visible: visibilityState["P_str1"] !== undefined ? visibilityState["P_str1"] : true,
+                },
+                {
+                    x,
+                    y: y2,
+                    type: "scatter",
+                    mode: "lines",
+                    name: "P_str2",
+                    line: {
+                        color: "green",
+                        shape: "spline"
+                    },
+                    visible: visibilityState["P_str2"] !== undefined ? visibilityState["P_str2"] : true,
+                },
+                {
+                    x,
+                    y: y3,
+                    type: "scatter",
+                    mode: "lines",
+                    name: "P_str3",
+                    line: {
+                        color: "red",
+                        shape: "spline"
+                    },
+                    visible: visibilityState["P_str3"] !== undefined ? visibilityState["P_str3"] : true,
+                },
+                {
+                    x,
+                    y: y4,
+                    type: "scatter",
+                    mode: "lines",
+                    name: "P_str4",
+                    line: {
+                        color: "orange",
+                        shape: "spline"
+                    },
+                    visible: visibilityState["P_str4"] !== undefined ? visibilityState["P_str4"] : true,
+                },
+                {
+                    x,
+                    y: y_total,
+                    type: "scatter",
+                    mode: "lines",
+                    name: "P_Total",
+                    line: {
+                        color: "black",
+                        shape: "spline"
+                    },
+                    visible: visibilityState["Total"] !== undefined ? visibilityState["Total"] : true,
+                },
+            ];
+        }
+
+
 
         function fetchData() {
             $.ajax({
@@ -256,8 +375,9 @@
                         $("#weather-humidity").text("N/A");
                     }
 
+                    const power_today = response.power_today
+
                     const allday_data = response.pv_allday
-                    console.log("allday_data : ", allday_data);
 
                     const monthly_data = response.pv_allmonth
                     const data_from_feb = response.pv_from_feb_2025
@@ -269,84 +389,68 @@
 
                     $("#today_production").text(today_production(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
 
-                    $("#today_saving").text(today_saving(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
-
+                    $("#today_saving").text(
+                        today_saving(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0))
+                        .toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }) || "N/A"
+                    );
                     $("#monthly_production").text(monthly_production(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
 
-                    $("#monthly_saving").text(monthly_saving(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                    $("#monthly_saving").text(monthly_saving(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0))
+                        .toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }) || "N/A");
 
                     $("#total_energy").text(total_energy(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
 
                     $("#carbondioxyde_reduced").text(carbondioxyde_reduced(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
 
-                    if (allday_data.length > 0) {
-                        // Step 1: Find the latest timestamp
-                        const latestTimestamp = new Date(Math.max(...allday_data.map(entry => new Date(entry.timestamp))));
-                        const latestHour = latestTimestamp.getHours();
-                        const latestDate = latestTimestamp.toISOString().split('T')[0]; // Get the date part
+                    // Find the last date available
+                    let dailyData = {};
+                    if (power_today.length > 0) {
+                        let lastDate = new Date(
+                            Math.max(
+                                ...power_today.map((item) => parseTimestamp(item.timestamp).getTime())
+                            )
+                        );
+                        let lastDateString = lastDate.toISOString().split("T")[0];
 
-                        // Step 2: Calculate the start of the hour
-                        const startOfHour = new Date(`${latestDate}T${latestHour.toString().padStart(2, '0')}:00:00`);
+                        power_today
+                            .filter((item) => item.timestamp.startsWith(lastDateString))
+                            .forEach((item) => {
 
-                        // Step 3: Aggregate data by minute
-                        const minuteData = {};
-                        allday_data.forEach(entry => {
-                            const entryDate = new Date(entry.timestamp);
-                            const entryMinute = entryDate.getMinutes();
-                            const entryHour = entryDate.getHours();
-
-                            // Check if the entry is within the latest hour
-                            if (entryHour === latestHour && entryDate >= startOfHour) {
-                                const key = `${entryDate.toISOString().split('T')[0]}T${entryHour.toString().padStart(2, '0')}:${entryMinute.toString().padStart(2, '0')}:00`;
-                                if (!minuteData[key]) {
-                                    minuteData[key] = 0;
+                                let hour = parseTimestamp(item.timestamp).getHours();
+                                if (!dailyData[hour]) {
+                                    dailyData[hour] = {
+                                        hour: hour,
+                                        P_str1: 0,
+                                        P_str2: 0,
+                                        P_str3: 0,
+                                        P_str4: 0,
+                                    };
                                 }
-                                minuteData[key] += parseFloat(entry.Pdc);
-                            }
-                        });
+                                dailyData[hour].P_str1 += parseFloat(item.P_str1);
+                                dailyData[hour].P_str2 += parseFloat(item.P_str2);
+                                dailyData[hour].P_str3 += parseFloat(item.P_str3);
+                                dailyData[hour].P_str4 += parseFloat(item.P_str4);
+                            });
 
-                        // Prepare data for plotting
-                        const timestamps = Object.keys(minuteData);
-                        const totalPdcValues = timestamps.map(key => minuteData[key]);
-
-                        console.log("timestamps : ", timestamps);
-                        console.log("totalPdcValues : ", totalPdcValues);
-
-                        const data = [{
-                            x: timestamps,
-                            y: totalPdcValues,
-                            mode: 'lines+markers',
-                            name: 'Total Pdc Minute',
-                            line: {
-                                color: 'blue'
-                            }
-                        }];
-
-                        const layout = {
-                            title: 'PV Data',
-                            xaxis: {
-                                title: 'Time',
-                                type: 'date',
-                            },
-                            yaxis: {
-                                title: {
-                                    text: 'Power Production (kW)',
-                                    standoff: 20,
-                                    font: {
-                                        size: 14,
-                                        color: 'black'
-                                    }
-                                },
-                                autorange: true,
-                                rangemode: 'tozero',
-                            },
-                        };
-
-                        const TESTER = document.getElementById('tester');
-                        Plotly.newPlot(TESTER, data, layout);
                     }
 
+                    // Store the current visibility state
+                    data.daily = Object.values(dailyData)
 
+                    const chartDiv = document.getElementById("tester");
+                    if (chartDiv && chartDiv.data) {
+                        chartDiv.data.forEach((trace, index) => {
+                            visibilityState[trace.name] = trace.visible;
+                        });
+                    }
+
+                    renderChart();
 
                 },
                 error: function(xhr, status, error) {

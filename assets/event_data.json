@@ -1,0 +1,73 @@
+[
+  {
+    "Component":"Sunny Boy",
+    "Code":"801",
+    "Message":"• Waiting for grid voltage\n• Grid failure\n• Check fuse",
+    "Cause":"• There is no mains voltage at the AC output of the inverter",
+    "CorrectiveMeasures":"• Check the fuse and replace it if necessary\n• Check AC installation\n• Check whether there is a general power failure."
+  },
+  {
+    "Component":"Sunny Boy",
+    "Code":"901",
+    "Message":"• PE conn. Missing\n• Check connection",
+    "Cause":"• The PE connection is missing. Half of the mains voltage may be present on an to the electricity grid. unearthed enclosure. The inverter will not connect",
+    "CorrectiveMeasures":"• Check AC installation.\n• (see Section 6.3.2 \"Connecting the Inverter to the Electricity Mains (AC)\", page 36)"
+  },
+  {
+    "Component":"Sunny Boy",
+    "Code":"3401/3402",
+    "Message":"• DC overvoltage                                                                                                                                                                                                                          • Disconnect generator",
+    "Cause":"• The DC input voltage connected to the inverter is too high. The inverter interrupts feed-in operation",
+    "CorrectiveMeasures":"• Disconnect the inverter from the PV array immediately (see Section 9.2 \"Disconnecting the Inverter from Voltage Sources\", page 64). Otherwise, the inverter could be destroyed.\n• Check that the DC voltage of the strings is in compliance with the input voltage range of the inverter before reconnecting the inverter to the PV array.\n• If the voltage is within the permissible input voltage range, the inverter may be defective. Contact the SMA Service Line."
+  },
+  
+  {
+    "Component":"Sunny Boy",
+    "Code":"3501/35",
+    "Message":"• Insulation resist.\n• Check generator",
+    "Cause":"• The inverter has detected an earth fault in the PV array and does not connect to the electricity grid for safety reasons. Damaged insulation can cause electric shock.",
+    "CorrectiveMeasures":"• Check strings for earth faults (see Section 12.5 \"Checking the PV Array for Earth Faults\", page 84).\n• The installer of the PV array must remedy any earth faults before the affected string is reconnected."
+  },
+  {
+    "Component":"Sunny Boy",
+    "Code":"3601",
+    "Message":"• High discharge curr.\n• Check generator",
+    "Cause":"• The leakage current from the inverter and the PV array is too high.\n• This can be caused by a sudden earth fault, a residual current or a device malfunction.\n• The inverter interrupts feed-in operation immediately after exceeding the specified threshold and then automatically reconnects to the electricity grid once the fault has been remedied",
+    "CorrectiveMeasures":"• Check strings for earth faults (see Section 12.5 \"Checking the PV Array for Earth Faults\", page 84).\n• The installer of the PV array must remedy any earth faults before the affected string is reconnected."
+  },
+  {
+    "Component":"Sunny Boy",
+    "Code":"3801/3802",
+    "Message":"• DC overcurrent\n• Check generator",
+    "Cause":"• The inverter switches off due to an overcurrent on the DC side.",
+    "CorrectiveMeasures":"If this event occurs frequently:\n• Check the design and the circuitry of the PV array."
+  },
+  {
+    "Component":"Sunny Boy",
+    "Code":"3901/3902",
+    "Message":"• Waiting for DC start conditions\n• Start cond. not met",
+    "Cause":"• The input power or voltage of the PV modules is not yet sufficient for feeding into the electricity grid.",
+    "CorrectiveMeasures":"• Wait until irradiation is higher.\n• If this event recurs at medium irradiation levels, check the\nPV plant design and the correct circuitry of the PV array."
+  },
+  {
+    "Component":"Sunny Boy",
+    "Code":"7508",
+    "Message":"• External fan fault\n• Replace fan",
+    "Cause":"• The fan is clogged or defective. The inverter may reduce its power output due to overheating. The inverter continues feeding into the electricity grid.",
+    "CorrectiveMeasures":"• Clean the fan\n• Replace the fan"
+  },
+  {
+    "Component":"Sunny Boy",
+    "Code":"7701,7702,7703",
+    "Message":"• Self diagnosis\n• Interference device",
+    "Cause":"• Internal device fault. The inverter disconnects from the electricity grid.",
+    "CorrectiveMeasures":"• Contact the SMA Service Line (see Section 16 \"Contact\", page 114)."
+  },
+  {
+    "Component":"Sunny Boy",
+    "Code":"8001",
+    "Message":"• Derating occurred",
+    "Cause":"• The power supplied by the inverter has been reduced to below\nnominal power for more than 10 minutes due to overheating.",
+    "CorrectiveMeasures":"If this event occurs frequently:\n• Ensure sufficient ventilation.\n• Check heat dissipation (see Section 10.2 \"Checking Heat Dissipation\", page 69)."
+  }
+]

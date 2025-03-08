@@ -28,6 +28,19 @@ function getPvDataToday($conn)
     return $data;
 }
 
+function getPowerDataToday($conn)
+{
+    $sql = "SELECT timestamp, P_str1, P_str2, P_str3, P_str4 FROM sunny_boy WHERE DATE(timestamp) = CURDATE()";
+    $result = $conn->query($sql);
+    $data = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+    }
+    return $data;
+}
+
 // Fungsi untuk mengambil semua data PV bulan ini
 function getPvDataThisMonth($conn)
 {
@@ -61,6 +74,7 @@ function getPvDataFromFeb2025($conn)
 $data = array();
 $data['pv'] = getLatestData($conn, 'pv');
 $data['pv_allday'] = getPvDataToday($conn);
+$data['power_today'] = getPowerDataToday($conn);
 $data['pv_allmonth'] = getPvDataThisMonth($conn);
 $data['pv_from_feb_2025'] = getPvDataFromFeb2025($conn);
 $data['batt'] = getLatestData($conn, 'batt');

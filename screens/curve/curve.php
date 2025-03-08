@@ -78,7 +78,7 @@
                 <div class="input" id="today_production">
                     <p></p>
                 </div>
-                <h3>Today Saving (Rp.)</h3>
+                <h3>Today Saving </h3>
                 <div class="input" id="today_saving">
                     <p></p>
                 </div>
@@ -95,7 +95,7 @@
                 <div class="input" id="monthly_production">
                     <p></p>
                 </div>
-                <h3>Monthly Saving (Rp.)</h3>
+                <h3>Monthly Saving </h3>
                 <div class="input" id="monthly_saving">
                     <p></p>
                 </div>
@@ -461,7 +461,12 @@
                         console.log("2222 : ", data.daily_analysis);
 
                         $("#today_production").text(today_production(data.daily_analysis).toFixed(2) || "N/A");
-                        $("#today_saving").text(today_saving(data.daily_analysis).toFixed(2) || "N/A");
+                        $("#today_saving").text(today_saving(data.daily_analysis)
+                            .toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }) || "N/A");
+
                         $("#today_carbon").text(carbondioxyde_reduced(data.daily_analysis).toFixed(2) || "N/A");
                         // $("#monthly_production").text(monthly_production(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
                         // $("#monthly_saving").text(monthly_saving(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
@@ -497,7 +502,11 @@
                         console.log("3333 : ", data.monthly_analysis);
 
                         $("#monthly_production").text(monthly_production(data.monthly_analysis).toFixed(2) || "N/A");
-                        $("#monthly_saving").text(monthly_saving(data.monthly_analysis).toFixed(2) || "N/A");
+                        $("#monthly_saving").text(monthly_saving(data.monthly_analysis).toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }) || "N/A");
+
                         $("#monthly_carbon").text(carbondioxyde_reduced(data.monthly_analysis).toFixed(2) || "N/A");
                         console.log("tissss2222 : ", data);
                     }
