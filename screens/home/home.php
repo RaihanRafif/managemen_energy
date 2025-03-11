@@ -224,6 +224,8 @@
         function renderChart() {
             let chartData;
 
+            console.log("ffff", data.daily)
+
             chartData = prepareChartData(data.daily, "hourly");
             Plotly.react("tester", chartData, layoutHourly);
         }
@@ -421,24 +423,27 @@
                         power_today
                             .filter((item) => item.timestamp.startsWith(lastDateString))
                             .forEach((item) => {
+                                let date = parseTimestamp(item.timestamp);
+                                let minute = `${date.getHours()}:${date.getMinutes()}`; // Menggabungkan jam dan menit
 
-                                let hour = parseTimestamp(item.timestamp).getHours();
-                                if (!dailyData[hour]) {
-                                    dailyData[hour] = {
-                                        hour: hour,
+                                if (!dailyData[minute]) {
+                                    dailyData[minute] = {
+                                        minute: minute,
                                         P_str1: 0,
                                         P_str2: 0,
                                         P_str3: 0,
                                         P_str4: 0,
                                     };
                                 }
-                                dailyData[hour].P_str1 += parseFloat(item.P_str1);
-                                dailyData[hour].P_str2 += parseFloat(item.P_str2);
-                                dailyData[hour].P_str3 += parseFloat(item.P_str3);
-                                dailyData[hour].P_str4 += parseFloat(item.P_str4);
+                                dailyData[minute].P_str1 += parseFloat(item.P_str1);
+                                dailyData[minute].P_str2 += parseFloat(item.P_str2);
+                                dailyData[minute].P_str3 += parseFloat(item.P_str3);
+                                dailyData[minute].P_str4 += parseFloat(item.P_str4);
                             });
 
+                        console.log("Daily data grouped by minute:", dailyData);
                     }
+
 
                     // Store the current visibility state
                     data.daily = Object.values(dailyData)
