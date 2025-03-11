@@ -224,8 +224,6 @@
         function renderChart() {
             let chartData;
 
-            console.log("ffff", data.daily)
-
             chartData = prepareChartData(data.daily, "hourly");
             Plotly.react("tester", chartData, layoutHourly);
         }
@@ -238,14 +236,24 @@
             const y4 = [];
             const y_total = [];
 
+
             data.forEach((item) => {
+                console.log("555", item);
                 y1.push(item.P_str1);
                 y2.push(item.P_str2);
                 y3.push(item.P_str3);
                 y4.push(item.P_str4);
                 y_total.push(item.P_str1 + item.P_str2 + item.P_str3 + item.P_str4);
-                x.push(item.hour);
+                
+                //JIKA INGIN DIKELOMPOKKAN BERDASARKAN MENIT
+                // x.push(item.minute);
+
+                //JIKA TIDAK INGIN DIKELOMPOKKAN BERDASARKAN MENIT
+                x.push(item.timestamp);
             });
+
+            console.log("2222", x);
+
 
             return [{
                     x,
@@ -410,8 +418,42 @@
 
                     $("#carbondioxyde_reduced").text(carbondioxyde_reduced(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
 
-                    // Find the last date available
+
                     let dailyData = {};
+
+                    // JIKA INGIN DI KELOMPOKKAN BERDASARKAN MENIT
+                    // if (power_today.length > 0) {
+                    //     let lastDate = new Date(
+                    //         Math.max(
+                    //             ...power_today.map((item) => parseTimestamp(item.timestamp).getTime())
+                    //         )
+                    //     );
+                    //     let lastDateString = lastDate.toISOString().split("T")[0];
+
+                    //     power_today
+                    //         .filter((item) => item.timestamp.startsWith(lastDateString))
+                    //         .forEach((item) => {
+                    //             let date = parseTimestamp(item.timestamp);
+                    //             let minute = `${date.getHours()}:${date.getMinutes()}`; // Menggabungkan jam dan menit
+
+                    //             if (!dailyData[minute]) {
+                    //                 dailyData[minute] = {
+                    //                     minute: minute,
+                    //                     P_str1: 0,
+                    //                     P_str2: 0,
+                    //                     P_str3: 0,
+                    //                     P_str4: 0,
+                    //                 };
+                    //             }
+                    //             dailyData[minute].P_str1 += parseFloat(item.P_str1);
+                    //             dailyData[minute].P_str2 += parseFloat(item.P_str2);
+                    //             dailyData[minute].P_str3 += parseFloat(item.P_str3);
+                    //             dailyData[minute].P_str4 += parseFloat(item.P_str4);
+                    //         });
+
+                    // }
+
+                    //JIKA TIDAK INGIN DI KELOMPOKKAN BERDASARKAN MENIT
                     if (power_today.length > 0) {
                         let lastDate = new Date(
                             Math.max(
@@ -420,29 +462,25 @@
                         );
                         let lastDateString = lastDate.toISOString().split("T")[0];
 
-                        power_today
+                        dailyData = power_today
                             .filter((item) => item.timestamp.startsWith(lastDateString))
-                            .forEach((item) => {
-                                let date = parseTimestamp(item.timestamp);
-                                let minute = `${date.getHours()}:${date.getMinutes()}`; // Menggabungkan jam dan menit
+                            .map((item) => {
+                                const date = parseTimestamp(item.timestamp);
+                                const timeString = date.toLocaleTimeString('en-GB'); // Format 24 jam "HH:mm:ss"
 
-                                if (!dailyData[minute]) {
-                                    dailyData[minute] = {
-                                        minute: minute,
-                                        P_str1: 0,
-                                        P_str2: 0,
-                                        P_str3: 0,
-                                        P_str4: 0,
-                                    };
-                                }
-                                dailyData[minute].P_str1 += parseFloat(item.P_str1);
-                                dailyData[minute].P_str2 += parseFloat(item.P_str2);
-                                dailyData[minute].P_str3 += parseFloat(item.P_str3);
-                                dailyData[minute].P_str4 += parseFloat(item.P_str4);
+                                return {
+                                    timestamp: timeString,
+                                    P_str1: parseFloat(item.P_str1),
+                                    P_str2: parseFloat(item.P_str2),
+                                    P_str3: parseFloat(item.P_str3),
+                                    P_str4: parseFloat(item.P_str4),
+                                };
                             });
 
-                        console.log("Daily data grouped by minute:", dailyData);
+                        console.log("All data with time only:", dailyData);
                     }
+
+
 
 
                     // Store the current visibility state
