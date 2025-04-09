@@ -6,8 +6,8 @@
         <ul>
             <li><a href="index.php?page=home" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=home') !== false) ? 'active' : '' ?>">Home</a></li>
             <li><a href="index.php?page=detail" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=detail') !== false) ? 'active' : '' ?>">Detail</a></li>
-            <li><a href="index.php?page=curve" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=curve') !== false) ? 'active' : '' ?>">Curve</a></li>
-            <li><a href="index.php?page=event" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=event') !== false) ? 'active' : '' ?>">Event</a></li>
+            <li><a href="index.php?page=curve" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=curve') !== false) ? 'active' : '' ?>">Report</a></li>
+            <li><a href="index.php?page=event" class="<?= (strpos($_SERVER['REQUEST_URI'], 'page=event') !== false) ? 'active' : '' ?>">Diagnosis</a></li>
         </ul>
     </nav>
     <div class="icon-right">

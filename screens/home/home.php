@@ -42,7 +42,7 @@
                             <div class="data-value" id="bess-power">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title mt-5">SoC</p>
+                            <p class="data-title mt-5">SoC (%)</p>
                             <div class="data-value" id="bess-soc">
                                 <p>10.0000</p>
                             </div>
@@ -54,11 +54,11 @@
                         </div>
                         <div class="data-container">
                             <h3>Grid</h3>
-                            <p class="data-title">P. Active</p>
+                            <p class="data-title">P. Active (W)</p>
                             <div class="data-value" id="grid-active">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title">P. Reactive</p>
+                            <p class="data-title">P. Reactive (W)</p>
                             <div class="data-value" id="grid-reactive">
                                 <p>10.0000</p>
                             </div>
@@ -75,7 +75,7 @@
                             <div class="data-value" id="weather-irradiance">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title mt-5">Temperature &deg;C</p>
+                            <p class="data-title mt-5">Temperature (&deg;C)</p>
                             <div class="data-value" id="weather-temperature">
                                 <p>10.0000</p>
                             </div>
@@ -83,7 +83,7 @@
                             <div class="data-value" id="weather-windspeed">
                                 <p>10.0000</p>
                             </div>
-                            <p class="data-title mt-5">Humidity %</p>
+                            <p class="data-title mt-5">Humidity (%)</p>
                             <div class="data-value" id="weather-humidity">
                                 <p>10.0000</p>
                             </div>
@@ -111,13 +111,49 @@
                         </div>
                         <div class="data-container">
                             <h3>Alarm</h3>
-                            <p class="data-title">Fault</p>
+                            <h4 class="data-title">Fault</h4>
                             <div class="data-value">
-                                <p>10.0000</p>
+                                <p>No Fault</p>
                             </div>
-                            <p class="data-title mt-5">Fault type</p>
-                            <div class="data-value">
-                                <p>10.0000</p>
+                            <h4 class="data-title mt-5">Fault type</h4>
+                            <div class="tes">
+                                <div class="">
+                                    <p class="data-title mt-5">str_1</p>
+                                    <div class="data-value">
+                                        <p id="status_str_1">No Fault</p>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <p class="data-title mt-5">str_2</p>
+                                    <div class="data-value">
+                                        <p id="status_str_2">No Fault</p>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <p class="data-title mt-5">inv_1</p>
+                                    <div class="data-value">
+                                        <p id="status_inv_1">No Fault</p>
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    <p class="data-title mt-5">str_4</p>
+                                    <div class="data-value">
+                                        <p id="status_str_4">No Fault</p>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <p class="data-title mt-5">str_3</p>
+                                    <div class="data-value">
+                                        <p id="status_str_3">No Fault</p>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <p class="data-title mt-5">inv_2</p>
+                                    <div class="data-value">
+                                        <p id="status_inv_2">No Fault</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -133,27 +169,27 @@
             <div class="title">
                 <h2>Analysis</h2>
             </div>
-            <h3>Today Production (kWh)</h3>
+            <h3>Today Production</h3>
             <div class="input" id="today_production">
                 <p>10.0000</p>
             </div>
-            <h3>Today Saving </h3>
+            <h3>Today Saving</h3>
             <div class="input" id="today_saving">
                 <p>10.0000</p>
             </div>
-            <h3>Monthly Production (kWh)</h3>
+            <h3>Monthly Production</h3>
             <div class="input" id="monthly_production">
                 <p>10.0000</p>
             </div>
-            <h3>Monthly Saving </h3>
+            <h3>Monthly Saving</h3>
             <div class="input" id="monthly_saving">
                 <p>10.0000</p>
             </div>
-            <h3>CO2 Reduced (kg)</h3>
+            <h3>CO<sub>2</sub> Reduced</h3>
             <div class="input" id="carbondioxyde_reduced">
                 <p>10.0000</p>
             </div>
-            <h3>Total Energy (kWh)</h3>
+            <h3>Total Energy</h3>
             <div class="input" id="total_energy">
                 <p>10.0000</p>
             </div>
@@ -207,7 +243,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Energy Production (kWh)',
+                    text: 'PV Power Production (W)',
                     standoff: 20,
                     font: {
                         size: 14,
@@ -238,13 +274,12 @@
 
 
             data.forEach((item) => {
-                console.log("555", item);
                 y1.push(item.P_str1);
                 y2.push(item.P_str2);
                 y3.push(item.P_str3);
                 y4.push(item.P_str4);
                 y_total.push(item.P_str1 + item.P_str2 + item.P_str3 + item.P_str4);
-                
+
                 //JIKA INGIN DIKELOMPOKKAN BERDASARKAN MENIT
                 // x.push(item.minute);
 
@@ -252,15 +287,12 @@
                 x.push(item.timestamp);
             });
 
-            console.log("2222", x);
-
-
             return [{
                     x,
                     y: y1,
                     type: "scatter",
                     mode: "lines",
-                    name: "P_str1",
+                    name: "String 1",
                     line: {
                         color: "blue",
                         shape: "spline" // Membuat garis menjadi lebih halus
@@ -272,7 +304,7 @@
                     y: y2,
                     type: "scatter",
                     mode: "lines",
-                    name: "P_str2",
+                    name: "String 2",
                     line: {
                         color: "green",
                         shape: "spline"
@@ -284,7 +316,7 @@
                     y: y3,
                     type: "scatter",
                     mode: "lines",
-                    name: "P_str3",
+                    name: "String 3",
                     line: {
                         color: "red",
                         shape: "spline"
@@ -296,7 +328,7 @@
                     y: y4,
                     type: "scatter",
                     mode: "lines",
-                    name: "P_str4",
+                    name: "String 4",
                     line: {
                         color: "orange",
                         shape: "spline"
@@ -308,12 +340,12 @@
                     y: y_total,
                     type: "scatter",
                     mode: "lines",
-                    name: "P_Total",
+                    name: "String Total",
                     line: {
-                        color: "black",
+                        color: "cyan",
                         shape: "spline"
                     },
-                    visible: visibilityState["Total"] !== undefined ? visibilityState["Total"] : true,
+                    visible: visibilityState["Total"] !== undefined ? visibilityState["Total"] : false,
                 },
             ];
         }
@@ -325,6 +357,27 @@
                 url: "./screens/home/db.php", // File PHP untuk mengambil data
                 method: "GET",
                 success: function(response) {
+                    // Update alarm
+                    console.log("response.event", response.event);
+                    // Update data PV
+                    if (response.event) {
+                        $("#status_str_1").text(response.event.type_str1 || "N/A");
+                        $("#status_str_2").text(response.event.type_str2 || "N/A");
+                        $("#status_str_3").text(response.event.type_str3 || "N/A");
+                        $("#status_str_4").text(response.event.type_str4 || "N/A");
+                        $("#status_inv_1").text(response.event.type_inv1 || "N/A");
+                        $("#status_inv_2").text(response.event.type_inv2 || "N/A");
+                    } else {
+                        $("#status_str_1").text("N/A");
+                        $("#status_str_2").text("N/A");
+                        $("#status_str_3").text("N/A");
+                        $("#status_str_4").text("N/A");
+                        $("#status_inv_1").text("N/A");
+                        $("#status_inv_2").text("N/A");
+                    }
+
+
+
                     // Update data PV
                     if (response.pv) {
                         $("#pv-pac").text(response.pv.Pac || "N/A");
@@ -397,26 +450,27 @@
                     const pdcMonthlyValues = monthly_data.map(entry => parseFloat(entry.Pdc));
                     const pdcStartFebValues = data_from_feb.map(entry => parseFloat(entry.Pdc));
 
-                    $("#today_production").text(today_production(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                    $("#today_production").text((today_production(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A") + " kWh");
 
                     $("#today_saving").text(
-                        today_saving(pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0))
-                        .toLocaleString('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                        }) || "N/A"
+                        "Rp. " + Math.round(
+                            today_saving(
+                                pdcValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+                            ) || 0
+                        ).toLocaleString('id-ID') || "N/A"
                     );
-                    $("#monthly_production").text(monthly_production(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                    $("#monthly_production").text((monthly_production(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A") + " kWh");
 
-                    $("#monthly_saving").text(monthly_saving(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0))
-                        .toLocaleString('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                        }) || "N/A");
+                    $("#monthly_saving").text(
+                        "Rp. " + Math.round(
+                            monthly_saving(
+                                pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+                            ) || 0
+                        ).toLocaleString('id-ID') || "N/A");
 
-                    $("#total_energy").text(total_energy(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                    $("#total_energy").text((total_energy(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A") + " kWh");
 
-                    $("#carbondioxyde_reduced").text(carbondioxyde_reduced(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
+                    $("#carbondioxyde_reduced").text((carbondioxyde_reduced(pdcStartFebValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A") + " kg");
 
 
                     let dailyData = {};
@@ -463,10 +517,23 @@
                         let lastDateString = lastDate.toISOString().split("T")[0];
 
                         dailyData = power_today
+                            .filter((item) => {
+                                // Parse timestamp
+                                const date = parseTimestamp(item.timestamp);
+                                const hours = date.getHours(); // Ambil jam (0-23)
+
+                                // Hanya ambil data antara 06:00 sampai 18:00
+                                return hours >= 6 && hours < 18;
+                            })
                             .filter((item) => item.timestamp.startsWith(lastDateString))
                             .map((item) => {
                                 const date = parseTimestamp(item.timestamp);
-                                const timeString = date.toLocaleTimeString('en-GB'); // Format 24 jam "HH:mm:ss"
+                                //const timeString = date.toLocaleTimeString('en-GB'); // Format 24 jam "HH:mm:ss"
+                                const timeString = date.toLocaleTimeString('en-GB', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                }); // Format 24 jam "HH:mm"
 
                                 return {
                                     timestamp: timeString,
@@ -476,12 +543,7 @@
                                     P_str4: parseFloat(item.P_str4),
                                 };
                             });
-
-                        console.log("All data with time only:", dailyData);
                     }
-
-
-
 
                     // Store the current visibility state
                     data.daily = Object.values(dailyData)
@@ -502,8 +564,8 @@
             });
         }
 
-        // Fetch data setiap 5 detik
-        setInterval(fetchData, 5000); // 5000 ms = 5 detik
+        // Fetch data setiap 1 menit
+        setInterval(fetchData, 60000); // 60000 ms = 60 detik
 
         function displayCurrentDate() {
             const currentDateElement = document.getElementById('current-date');

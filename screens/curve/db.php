@@ -5,7 +5,7 @@ include('../../database/config.php');
 // Function to fetch the latest data from the sunny_boy table
 function getLatestDataString($conn)
 {
-    $sql = "SELECT timestamp, P_str1, P_str2, P_str3, P_str4
+    $sql = "SELECT timestamp, P_str1, P_str2, P_str3, P_str4, Pdc_total
             FROM sunny_boy 
             WHERE MONTH(timestamp) = MONTH(CURRENT_DATE()) 
             AND YEAR(timestamp) = YEAR(CURRENT_DATE())";
@@ -45,10 +45,10 @@ function getPvData($conn, $date)
     // Check if the input is a full date (YYYY-MM-DD) or a month (YYYY-MM)
     if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
         // If input is a specific date, fetch data for that date
-        $sql = "SELECT timestamp, P_str1, P_str2, P_str3, P_str4 FROM sunny_boy WHERE DATE(timestamp) = ?";
+        $sql = "SELECT timestamp, P_str1, P_str2, P_str3, P_str4, Pdc_total FROM sunny_boy WHERE DATE(timestamp) = ?";
     } elseif (preg_match('/^\d{4}-\d{2}$/', $date)) {
         // If input is a month, fetch data for that month
-        $sql = "SELECT timestamp, P_str1, P_str2, P_str3, P_str4 FROM sunny_boy WHERE DATE_FORMAT(timestamp, '%Y-%m') = ?";
+        $sql = "SELECT timestamp, P_str1, P_str2, P_str3, P_str4, Pdc_total FROM sunny_boy WHERE DATE_FORMAT(timestamp, '%Y-%m') = ?";
     } else {
         return getPvData($conn, date('Y-m'));
     }

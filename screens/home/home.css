@@ -4,6 +4,10 @@
     margin-top: 5px;
 }
 
+.flex {
+    display: flex;
+}
+
 .container-menu {
     flex: 1;
     display: flex;
@@ -216,10 +220,18 @@
 
 /* 4x4 dan 5x4 */
 .cell-4-6-5-6 {
-    grid-column: 6;
-    grid-row: 4 / 6;
+    grid-column: 5 / 7;
+    grid-row: 4 / 7; /* sebelumnya 4 / 6 */
     border: 1px solid #29B6f6;
     border-radius: 4px;
+    width: max-content;
+    margin-left: auto;
+}
+
+.cell-4-6-5-6 .tes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 2 kolom */
+    gap: 1rem; /* Jarak antar elemen, opsional */
 }
 
 #current-date {

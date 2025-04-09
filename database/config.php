@@ -1,5 +1,10 @@
 <?php
 // Koneksi ke database
+// $servername = "192.168.1.147";
+// $username = "energy"; // Ganti dengan username database Anda
+// $password = "energypass"; // Ganti dengan password database Anda
+// $dbname = "smartgrid_cas";
+
 $servername = "localhost";
 $username = "root"; // Ganti dengan username database Anda
 $password = ""; // Ganti dengan password database Anda

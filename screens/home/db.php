@@ -82,6 +82,7 @@ $data['grid'] = getLatestData($conn, 'grid');
 $data['load_pm'] = getLatestData($conn, 'load_pm');
 $data['sunny_boy'] = getLatestData($conn, 'sunny_boy');
 $data['weather'] = getLatestData($conn, 'weather');
+$data['event'] = getLatestData($conn, 'event');
 
 // Tutup koneksi
 $conn->close();

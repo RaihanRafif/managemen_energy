@@ -70,7 +70,7 @@
                                     <div class="data-value" id="str1-p">10</div>
                                 </div>
                                 <div class="data-container">
-                                    <p>Voltage Loss (V)</p>
+                                    <p>Efficiency (%)</p>
                                     <div class="data-value" id="str1-vl">2200</div>
                                 </div>
                                 <div class="data-container">
@@ -110,7 +110,7 @@
                                     <div class="data-value" id="str2-p">10</div>
                                 </div>
                                 <div class="data-container">
-                                    <p>Voltage Loss (V)</p>
+                                    <p>Efficiency (%)</p>
                                     <div class="data-value" id="str2-vl">2200</div>
                                 </div>
                                 <div class="data-container">
@@ -126,7 +126,7 @@
                         <!-- Inverter -->
                         <div class="data-power-panels inverter">
                             <div class="pp-data">
-                                <div class="data-container panel-name">Sunny Boy 1</div>
+                                <div class="data-container panel-name">Grid Inverter 1</div>
                                 <div class="data-container">
                                     <p>Voltage (V)</p>
                                     <div class="data-value" id="sb1-v">10.000</div>
@@ -179,7 +179,7 @@
                                     <div class="data-value" id="str3-p">10</div>
                                 </div>
                                 <div class="data-container">
-                                    <p>Voltage Loss (V)</p>
+                                    <p>Efficiency (%)</p>
                                     <div class="data-value" id="str3-vl">2200</div>
                                 </div>
                                 <div class="data-container">
@@ -219,7 +219,7 @@
                                     <div class="data-value" id="str4-p">10</div>
                                 </div>
                                 <div class="data-container">
-                                    <p>Voltage Loss (V)</p>
+                                    <p>Efficiency (%)</p>
                                     <div class="data-value" id="str4-vl">2200</div>
                                 </div>
                                 <div class="data-container">
@@ -235,7 +235,7 @@
                         <!-- Inverter -->
                         <div class="data-power-panels inverter">
                             <div class="pp-data">
-                                <div class="data-container panel-name">Sunny Boy 2</div>
+                                <div class="data-container panel-name">Grid Inverter 2</div>
                                 <div class="data-container">
                                     <p>Voltage (V)</p>
                                     <div class="data-value" id="sb2-v">10.000</div>
@@ -346,7 +346,7 @@
                                     <div class="data-value" id="grid-pa">10</div>
                                 </div>
                                 <div class="data-container">
-                                    <p>P.Reactive (V)</p>
+                                    <p>P.Reactive (W)</p>
                                     <div class="data-value" id="grid-pr">2200</div>
                                 </div>
                                 <div class="data-container">
@@ -363,7 +363,7 @@
 
                         <div class="data-power-panels inverter">
                             <div class="pp-data">
-                                <div class="data-container panel-name">Sunny Island</div>
+                                <div class="data-container panel-name">Hybrid Inverter</div>
                                 <div class="data-container">
                                     <p>Voltage (V)</p>
                                     <div class="data-value" id="si-v">10.000</div>
@@ -380,7 +380,7 @@
                                     <div class="data-value" id="si-pa">10</div>
                                 </div>
                                 <div class="data-container">
-                                    <p>P.Reactive (V)</p>
+                                    <p>P.Reactive (W)</p>
                                     <div class="data-value" id="si-pr">2200</div>
                                 </div>
                                 <div class="data-container">
@@ -451,6 +451,8 @@
                 return 'Error'
             }
         }
+
+        const status = parseInt(response.string_data.Status_inv1) === 1 ? "Normal" : "Error";
 
         function fetchData() {
             $.ajax({

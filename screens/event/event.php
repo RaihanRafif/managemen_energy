@@ -13,11 +13,11 @@
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Code</th>
                             <th>Hours</th>
+                            <th>Code</th>
                             <th>Event</th>
                             <th>Cause</th>
-                            <th>Solution</th>
+                            <th>Recommendation</th>
                         </tr>
                     </thead>
                     <tbody id="event-table-body">
@@ -28,64 +28,66 @@
     </div>
 
     <script>
-        // Contoh data dari database
-        const databaseEvents = [{
-                date: '2025-03-08',
-                hours: '10:30',
-                code: '801'
-            },
-            {
-                date: '2025-03-08',
-                hours: '11:00',
-                code: '901'
-            },
-            {
-                date: '2025-03-08',
-                hours: '12:00',
-                code: '3601'
-            }
-        ];
-
-        // Memuat data event dari file JSON
         async function loadEventData() {
             try {
                 const response = await fetch('./assets/event_data.json');
                 const eventData = await response.json();
-                displayEvents(databaseEvents, eventData);
+                window.eventReferenceData = eventData;
             } catch (error) {
                 console.error('Error loading event data:', error);
             }
         }
 
-        // Menampilkan data dalam tabel berdasarkan kode
-        // Menampilkan data dalam tabel berdasarkan kode
-        function displayEvents(dbEvents, eventData) {
+        function displayEventRows(eventList, eventReferenceData) {
             const tableBody = document.getElementById('event-table-body');
-            tableBody.innerHTML = ''; // Mengosongkan isi tabel sebelumnya
+            tableBody.innerHTML = ''; // Bersihkan isi sebelumnya
 
-            dbEvents.forEach(dbEvent => {
-                const eventDetail = eventData.find(event => event.Code.includes(dbEvent.code));
-                if (eventDetail) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                <td>${dbEvent.date}</td>
-                <td>${dbEvent.code}</td>
-                <td>${dbEvent.hours}</td>
+            eventList.forEach(event => {
+                const eventDetail = eventReferenceData.find(e => e.Code.includes(event.code));
+                if (!eventDetail) {
+                    console.warn(`Code ${event.code} not found in event data.`);
+                    return;
+                }
+
+                const [date, time] = event.timestamp.split(' ');
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${date}</td>
+                <td>${time}</td>
+                <td>${event.code}</td>
                 <td>${eventDetail.Message.replace(/\n/g, '<br>')}</td>
                 <td>${eventDetail.Cause.replace(/\n/g, '<br>')}</td>
                 <td>${eventDetail.CorrectiveMeasures.replace(/\n/g, '<br>')}</td>
             `;
-                    tableBody.appendChild(row);
-                } else {
-                    console.warn(`Code ${dbEvent.code} not found in event data.`);
-                }
+                tableBody.appendChild(row);
             });
         }
 
+        function fetchData() {
+            $.ajax({
+                url: "./screens/event/db.php",
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.event && window.eventReferenceData) {
+                        displayEventRows(response.event, window.eventReferenceData);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                },
+            });
+        }
 
-        // Memuat data ketika halaman selesai dimuat
-        window.onload = loadEventData;
+        $(document).ready(async function() {
+            await loadEventData(); // Muat data JSON referensi
+            fetchData(); // Tampilkan data pertama
+            setInterval(fetchData, 5000); // Refresh data setiap 5 detik
+        });
     </script>
+
+
 </body>
 
 </html>

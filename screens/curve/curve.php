@@ -74,11 +74,11 @@
                 <div class="title">
                     <h2>Analysis</h2>
                 </div>
-                <h3>Today Production (kWh)</h3>
+                <h3>Today Production</h3>
                 <div class="input" id="today_production">
                     <p></p>
                 </div>
-                <h3>Today Saving </h3>
+                <h3>Today Saving</h3>
                 <div class="input" id="today_saving">
                     <p></p>
                 </div>
@@ -91,11 +91,11 @@
                 <div class="title">
                     <h2>Analysis</h2>
                 </div>
-                <h3>Monthly Production (kWh)</h3>
+                <h3>Monthly Production</h3>
                 <div class="input" id="monthly_production">
                     <p></p>
                 </div>
-                <h3>Monthly Saving </h3>
+                <h3>Monthly Saving</h3>
                 <div class="input" id="monthly_saving">
                     <p></p>
                 </div>
@@ -278,7 +278,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Energy Production (kWh)',
+                    text: 'PV Energy Production (Wh)',
                     standoff: 20,
                     font: {
                         size: 14,
@@ -300,7 +300,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Energy Production (kWh)',
+                    text: 'PV Energy Production (Wh)',
                     standoff: 20,
                     font: {
                         size: 14,
@@ -331,13 +331,17 @@
             const y2 = [];
             const y3 = [];
             const y4 = [];
+            const ytotal = [];
 
             if (interval == "hourly") {
                 data.forEach((item) => {
+                console.log("pdc total : ",item.Pdc_total);
+                
                     y1.push(item.P_str1);
                     y2.push(item.P_str2);
                     y3.push(item.P_str3);
                     y4.push(item.P_str4);
+                    ytotal.push(item.Pdc_total);
                     x.push(item.hour);
                 });
             } else {
@@ -346,15 +350,18 @@
                     y2.push(item.P_str2);
                     y3.push(item.P_str3);
                     y4.push(item.P_str4);
+                    ytotal.push(item.Pdc_total);
                     x.push(item.date);
                 });
             }
+            
+            console.log("11112223333 : ",ytotal);
 
             return [{
                     x,
                     y: y1,
                     type: "bar",
-                    name: "P_str1",
+                    name: "String 1",
                     marker: {
                         color: "blue",
                     },
@@ -364,7 +371,7 @@
                     x,
                     y: y2,
                     type: "bar",
-                    name: "P_str2",
+                    name: "String 2",
                     marker: {
                         color: "green",
                     },
@@ -374,7 +381,7 @@
                     x,
                     y: y3,
                     type: "bar",
-                    name: "P_str3",
+                    name: "String 3",
                     marker: {
                         color: "red",
                     },
@@ -384,11 +391,21 @@
                     x,
                     y: y4,
                     type: "bar",
-                    name: "P_str4",
+                    name: "String 4",
                     marker: {
                         color: "orange",
                     },
                     visible: visibilityState["P_str4"] !== undefined ? visibilityState["P_str4"] : true,
+                },
+                {
+                    x,
+                    y: ytotal,
+                    type: "bar",
+                    name: "String Total",
+                    marker: {
+                        color: "cyan",
+                    },
+                    visible: visibilityState["Pdc_total"] !== undefined ? visibilityState["Pdc_total"] : false,
                 },
             ];
         }
@@ -430,19 +447,25 @@
                             .filter((item) => item.timestamp.startsWith(lastDateString))
                             .forEach((item) => {
                                 let hour = parseTimestamp(item.timestamp).getHours();
-                                if (!dailyData[hour]) {
-                                    dailyData[hour] = {
-                                        hour: hour,
-                                        P_str1: 0,
-                                        P_str2: 0,
-                                        P_str3: 0,
-                                        P_str4: 0,
+                                
+                                // Filter hanya jam 06:00 - 18:00
+                                if (hour >= 6 && hour <= 18) {
+                                    if (!dailyData[hour]) {
+                                        dailyData[hour] = {
+                                            hour: hour,
+                                            P_str1: 0,
+                                            P_str2: 0,
+                                            P_str3: 0,
+                                            P_str4: 0,
+                                            Pdc_total: 0,
                                     };
                                 }
                                 dailyData[hour].P_str1 += parseFloat(item.P_str1);
                                 dailyData[hour].P_str2 += parseFloat(item.P_str2);
                                 dailyData[hour].P_str3 += parseFloat(item.P_str3);
                                 dailyData[hour].P_str4 += parseFloat(item.P_str4);
+                                dailyData[hour].Pdc_total += parseFloat(item.Pdc_total);
+                                }
                             });
 
                         data.daily_analysis = 0
@@ -460,14 +483,11 @@
 
                         console.log("2222 : ", data.daily_analysis);
 
-                        $("#today_production").text(today_production(data.daily_analysis).toFixed(2) || "N/A");
-                        $("#today_saving").text(today_saving(data.daily_analysis)
-                            .toLocaleString('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            }) || "N/A");
+                        $("#today_production").text((today_production(data.daily_analysis).toFixed(2) || "N/A") + " kWh");
+                        $("#today_saving").text("Rp. " + Math.round(today_saving(data.daily_analysis)
+                            ).toLocaleString('id-ID') || "N/A");
 
-                        $("#today_carbon").text(carbondioxyde_reduced(data.daily_analysis).toFixed(2) || "N/A");
+                        $("#today_carbon").text((carbondioxyde_reduced(data.daily_analysis).toFixed(2) || "N/A") + " kg");
                         // $("#monthly_production").text(monthly_production(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
                         // $("#monthly_saving").text(monthly_saving(pdcMonthlyValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toFixed(2) || "N/A");
                         console.log("tesss11", data);
@@ -484,12 +504,14 @@
                                 P_str2: 0,
                                 P_str3: 0,
                                 P_str4: 0,
+                                Pdc_total: 0,
                             };
                         }
                         monthlyData[date].P_str1 += parseFloat(item.P_str1);
                         monthlyData[date].P_str2 += parseFloat(item.P_str2);
                         monthlyData[date].P_str3 += parseFloat(item.P_str3);
                         monthlyData[date].P_str4 += parseFloat(item.P_str4);
+                        monthlyData[date].Pdc_total += parseFloat(item.Pdc_total);
                     });
 
                     data.monthly_analysis = 0
@@ -501,13 +523,11 @@
 
                         console.log("3333 : ", data.monthly_analysis);
 
-                        $("#monthly_production").text(monthly_production(data.monthly_analysis).toFixed(2) || "N/A");
-                        $("#monthly_saving").text(monthly_saving(data.monthly_analysis).toLocaleString('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                        }) || "N/A");
+                        $("#monthly_production").text((monthly_production(data.monthly_analysis).toFixed(2) || "N/A") + " kWh");
+                        $("#monthly_saving").text(
+                            "Rp. " + Math.round(monthly_saving(data.monthly_analysis)).toLocaleString('id-ID') || "N/A");
 
-                        $("#monthly_carbon").text(carbondioxyde_reduced(data.monthly_analysis).toFixed(2) || "N/A");
+                        $("#monthly_carbon").text((carbondioxyde_reduced(data.monthly_analysis).toFixed(2) || "N/A") + " kg");
                         console.log("tissss2222 : ", data);
                     }
 
