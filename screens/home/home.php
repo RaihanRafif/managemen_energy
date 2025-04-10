@@ -113,7 +113,7 @@
                             <h3>Alarm</h3>
                             <h4 class="data-title">Fault</h4>
                             <div class="data-value">
-                                <p>No Fault</p>
+                                <p id="status_str_general">No Fault</p>
                             </div>
                             <h4 class="data-title mt-5">Fault type</h4>
                             <div class="tes">
@@ -350,6 +350,13 @@
             ];
         }
 
+        function prepareStatus(data) {
+            const keysToCheck = Object.keys(data).filter(key => key.startsWith("stat_str") || key.startsWith("stat_inv"));
+
+            const hasError = keysToCheck.some(key => data[key] === "1");
+
+            return hasError ? "Error" : "Normal";
+        }
 
 
         function fetchData() {
@@ -359,8 +366,11 @@
                 success: function(response) {
                     // Update alarm
                     console.log("response.event", response.event);
+
+                    prepareStatus(response.event)
                     // Update data PV
                     if (response.event) {
+                        $("#status_str_general").text(prepareStatus(response.event) || "N/A");
                         $("#status_str_1").text(response.event.type_str1 || "N/A");
                         $("#status_str_2").text(response.event.type_str2 || "N/A");
                         $("#status_str_3").text(response.event.type_str3 || "N/A");

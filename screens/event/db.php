@@ -4,7 +4,8 @@ include('../../database/config.php');
 
 function getEventData($conn)
 {
-    $sql = "SELECT * FROM event ORDER BY timestamp DESC";
+    $today = date('Y-m-d'); // Format: 2025-04-10
+    $sql = "SELECT * FROM event WHERE DATE(timestamp) = '$today' ORDER BY timestamp DESC";
     $result = $conn->query($sql);
     $events = [];
 
@@ -16,6 +17,7 @@ function getEventData($conn)
 
     return $events;
 }
+
 
 $data = array();
 $data['event'] = getEventData($conn);
