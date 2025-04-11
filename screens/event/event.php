@@ -17,6 +17,7 @@
                             <th>Code</th>
                             <th>Modul</th>
                             <th>Status</th>
+                            <th>Recommendation</th>
                         </tr>
                     </thead>
                     <tbody id="event-table-body">
@@ -31,7 +32,7 @@
 
         async function loadEventData() {
             try {
-                const response = await fetch('./assets/string_status.json');
+                const response = await fetch('./assets/json/string_status.json');
                 const eventData = await response.json();
                 window.eventReferenceData = eventData;
             } catch (error) {
@@ -85,6 +86,7 @@
                 activeTypes.forEach(fullType => {
                     const [modul, code] = fullType.split('_');
                     const statusText = eventReferenceData[0][code]; // Ambil status dari file JSON berdasarkan kode
+                    const recommendation = "Nothing"; // Ambil rekomendasi dari file JSON berdasarkan kode
 
                     const row = document.createElement('tr');
                     row.innerHTML = `
@@ -93,6 +95,7 @@
                 <td>${code}</td>
                 <td>${modul}</td>
                 <td>${statusText || 'Unknown'}</td>
+                <td>${recommendation || 'Unknown'}</td>
             `;
                     tableBody.appendChild(row);
                 });

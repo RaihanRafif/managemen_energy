@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Baca file JSON
-$jsonData = file_get_contents('../assets/event_data.json');
+$jsonData = file_get_contents('../assets/json/event_data.json');
 $dataArray = json_decode($jsonData, true);
 
 if (!$dataArray) {
